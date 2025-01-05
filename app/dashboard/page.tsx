@@ -12,25 +12,16 @@ export default function PageDash() {
   const { onOpen, onOpenChange, isOpen } = useDisclosure();
   const { data } = useSession();
 
-  async function addUser() {
-    console.log(data);
-    
-  }
-
-  useEffect(() => {
-    addUser();
-  }, [data]);
-
   return (
-    <>
+    <div>
       <Button onPress={() => signOut()}>Sign Out</Button>
       <h1 className={title({ size: "lg" })}>Vamos começar...</h1>
       <h3 className={subtitle()}>A aprovação não vem sozinha!</h3>
-      <h2>{data?.user?.image}</h2>
+      <h2>{data?.user?.id?.toString()}</h2>
       <Button onPress={onOpen} startContent={<Plus size={20} />}>
         Adicionar matéria
       </Button>
       <AddSubjectModal isOpen={isOpen} onOpenChange={onOpenChange} />
-    </>
+    </div>
   );
 }

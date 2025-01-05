@@ -16,6 +16,7 @@
 		"@nextui-org/checkbox": "^2.3.7",
 		"@nextui-org/chip": "^2.2.5",
 		"@nextui-org/code": "2.2.5",
+		"@nextui-org/form": "^2.1.8",
 		"@nextui-org/image": "^2.2.4",
 		"@nextui-org/input": "2.4.7",
 		"@nextui-org/kbd": "2.2.5",
@@ -71,5 +72,6 @@
 		"tailwindcss": "3.4.16",
 		"tailwindcss-motion": "^1.0.1",
 		"typescript": "5.6.3"
-	}
+	},
+	"packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
 }
