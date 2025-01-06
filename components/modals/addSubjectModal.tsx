@@ -1,8 +1,7 @@
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
-import { Checkbox } from "@nextui-org/checkbox";
 import { Input } from "@nextui-org/input";
-import { Link } from "@nextui-org/link";
+import { Form } from "@nextui-org/form";
 import {
   Modal,
   ModalBody,
@@ -10,6 +9,18 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/modal";
+import { useAsyncList } from "@react-stately/data";
+import { supabase } from "@/utils/supabase/client";
+import { title } from "../primitives";
+import { useSession } from "next-auth/react";
+import { pexels } from "@/utils/pexels";
+
+type SWCharacter = {
+  id: number;
+  created_at: string;
+  created_by: string;
+  name: string;
+};
 
 export default function AddSubjectModal({
   isOpen,
@@ -18,60 +29,158 @@ export default function AddSubjectModal({
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const session = useSession();
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+
+    let subject = await supabase()
+      .from("Subject")
+      .select()
+      .eq("name", data.subject);
+
+    await supabase()
+      .from("ta_User_Subject")
+      .insert({
+        userId: session.data?.user?.email,
+        subjectId: subject.data ? subject.data[0].id : null,
+      });
+  };
+
+  let list = useAsyncList<SWCharacter>({
+    async load({ signal, filterText }) {
+      let res = await supabase()
+        .from("Subject")
+        .select()
+        .abortSignal(signal)
+        .ilike("name", `%${filterText}%`);
+      let json = res.data as SWCharacter[];
+
+      return {
+        items: json,
+      };
+    },
+  });
+
   return (
     <>
-      <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-              <ModalBody>
-                {/* <Autocomplete
-                  className="max-w-xs"
-                  defaultItems={animals}
-                  label="Favorite Animal"
-                  listboxProps={{
-                    emptyContent: "Your own empty content text.",
-                  }}
-                  placeholder="Search an animal"
+      <Modal
+        isOpen={isOpen}
+        placement="top-center"
+        onOpenChange={onOpenChange}
+        onClose={() => {
+          list.removeSelectedItems();
+          list.setFilterText("");
+        }}
+      >
+        <Form
+          className="w-full "
+          validationBehavior="native"
+          onSubmit={onSubmit}
+        >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader
+                  className={title({
+                    size: "sm",
+                    className: "flex flex-col gap-1",
+                  })}
                 >
-                  {(item) => (
-                    <AutocompleteItem key={item.key}>
-                      {item.label}
-                    </AutocompleteItem>
-                  )}
-                </Autocomplete> */}
-                <Input
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
+                  Adicionar matéria
+                </ModalHeader>
+                <ModalBody>
+                  <Autocomplete
+                    isRequired
+                    name="subject"
+                    inputValue={list.filterText}
+                    isLoading={list.isLoading}
+                    items={list.items}
+                    label="Select a character"
+                    placeholder="Type to search..."
+                    onInputChange={list.setFilterText}
+                    listboxProps={{
+                      emptyContent: (
+                        <AddUnknowSubject
+                          list={list}
+                          subjectName={list.filterText}
+                        />
+                      ),
                     }}
                   >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign in
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
+                    {(item) => (
+                      <AutocompleteItem
+                        key={item.name}
+                        value={item.id}
+                        className="capitalize"
+                      >
+                        {item.name}
+                      </AutocompleteItem>
+                    )}
+                  </Autocomplete>
+                  <Input
+                    label="Assunto"
+                    name="topic"
+                    placeholder="Qual o assunto de estudo?"
+                  />
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    color="danger"
+                    onPress={() => {
+                      onClose();
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Submit
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Form>
       </Modal>
     </>
+  );
+}
+
+function AddUnknowSubject({
+  subjectName,
+  list,
+}: {
+  subjectName: string;
+  list: ReturnType<typeof useAsyncList>;
+}): JSX.Element {
+  const addSubject = async () => {
+    await supabase()
+      .from("Subject")
+      .insert([{ name: subjectName, image: await getPhoto() }])
+      .then(() => {
+        list.reload();
+      });
+  };
+
+  const getPhoto = async () => {
+    const res = await pexels.photos.search({ query: subjectName });
+    if ("photos" in res && res.photos.length > 0) {
+      return res.photos[0].src.medium;
+    } else {
+      let aux = await pexels.photos.random();
+      // @ts-ignore
+      return aux.src.medium;
+    }
+  };
+
+  return (
+    <div className="p-2 text-center">
+      <p className="text-gray-500">Matéria não encontrada!</p>
+      <Button onPress={addSubject} className="mt-2" size="sm" color="secondary">
+        Adicionar {subjectName}
+      </Button>
+    </div>
   );
 }
