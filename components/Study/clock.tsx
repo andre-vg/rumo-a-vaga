@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button";
 import { AnimatePresence, motion as m } from "framer-motion";
 import SaveStudy from "../modals/saveStudy";
 import { useDisclosure } from "@nextui-org/modal";
+import { Time } from "@internationalized/date";
 
 export default function Clock() {
   const [minutes, setMinutes] = React.useState(0);
@@ -90,7 +91,7 @@ export default function Clock() {
           color="default"
           onPress={resetClock}
           isDisabled={
-            !isRunning && seconds === 0 && minutes === 0 && hours === 0
+            isRunning || (hours === 0 && minutes === 0 && seconds === 0)
           }
         >
           Reiniciar
@@ -120,18 +121,26 @@ export default function Clock() {
             exit={{ opacity: 0, x: 50 }}
             className="mt-4"
           >
-            <Button color="primary" size="lg" onPress={
-                () => {
-                    stopClock();
-                    onOpen();
-                }
-            }>
+            <Button
+              color="primary"
+              size="lg"
+              onPress={() => {
+                stopClock();
+                onOpen();
+              }}
+            >
               Finalizar estudo
             </Button>
           </m.div>
         )}
       </AnimatePresence>
-      <SaveStudy isOpen={isOpen} onOpenChange={onOpenChange} />
+      <SaveStudy
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        studyTime={
+          new Time(hours, minutes, seconds)
+        }
+      />
     </div>
   );
 }
