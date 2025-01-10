@@ -25,7 +25,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <NextUIProvider navigate={router.push}>
+    <NextUIProvider navigate={router.push} locale="pt-BR">
       <SessionProvider>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
       </SessionProvider>
