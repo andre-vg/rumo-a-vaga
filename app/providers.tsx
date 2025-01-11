@@ -1,7 +1,7 @@
 "use client";
 
 import type { ThemeProviderProps } from "next-themes";
-
+import { Toaster } from 'sonner';
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { useRouter } from "next/navigation";
@@ -28,6 +28,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     <NextUIProvider navigate={router.push} locale="pt-BR">
       <SessionProvider>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+        <Toaster richColors closeButton />
       </SessionProvider>
     </NextUIProvider>
   );

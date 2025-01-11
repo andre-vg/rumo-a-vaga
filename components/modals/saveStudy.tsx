@@ -1,3 +1,4 @@
+"use client";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
@@ -22,13 +23,8 @@ import {
   today,
 } from "@internationalized/date";
 import MethodAutoComplete from "../Study/Form/methodAutoComplete";
-
-type SWCharacter = {
-  id: number;
-  created_at: string;
-  created_by: string;
-  name: string;
-};
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SaveStudy({
   isOpen,
@@ -40,24 +36,52 @@ export default function SaveStudy({
   studyTime: Time;
 }) {
   const session = useSession();
+  const { subjectId } = useParams();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    console.log(data);
 
-    // let subject = await supabase()
-    //   .from("Subject")
-    //   .select()
-    //   .eq("name", data.subject);
+    await supabase()
+      .from("Study")
+      .insert([
+        {
+          userId: session.data?.user?.email,
+          subjectId: Number(subjectId),
+          ...data,
+        },
+      ])
+      .then((i) => {
+        if (i.error) {
+          toast.error("Erro ao salvar estudo", {
+            description: i.error.message,
+          });
+        } else {
+          toast.success("Estudo salvo com sucesso!", {
+            description: getDescription(
+              Number(data.questions),
+              Number(data.correctQuestions)
+            ),
+          });
+          onOpenChange(false);
+        }
+      });
+  };
 
-    // await supabase()
-    //   .from("ta_User_Subject")
-    //   .insert({
-    //     userId: session.data?.user?.email,
-    //     subjectId: subject.data ? subject.data[0].id : null,
-    //   });
+  const getDescription = async (questions: number, correct: number) => {
+    const percentage = (correct / questions) * 100;
+    if (percentage >= 90) {
+      return "Você está indo muito bem! Continue assim!";
+    } else if (percentage >= 70) {
+      return "Muito bem! Continue estudando!";
+    } else if (percentage >= 50) {
+      return "Você está no caminho certo!";
+    } else if (percentage >= 30) {
+      return "Estude mais um pouco!";
+    } else {
+      return "Estude mais";
+    }
   };
 
   return (
@@ -105,7 +129,11 @@ export default function SaveStudy({
                     name="date"
                   />
 
-                  <Autocomplete label="Período de estudo" name="period">
+                  <Autocomplete
+                    label="Período de estudo"
+                    name="period"
+                    isRequired
+                  >
                     <AutocompleteItem value="Manhã">Manhã</AutocompleteItem>
                     <AutocompleteItem value="Tarde">Tarde</AutocompleteItem>
                     <AutocompleteItem value="Noite">Noite</AutocompleteItem>
@@ -117,15 +145,17 @@ export default function SaveStudy({
                     <Input
                       type="number"
                       label="Quantidade de questões"
-                      name="nQuestions"
+                      name="questions"
                       min={0}
+                      defaultValue="0"
                     />
 
                     <Input
                       type="number"
                       label="Quantidade de acertos"
-                      name="nCorrectQuestions"
+                      name="correctQuestions"
                       min={0}
+                      defaultValue="0"
                     />
                   </div>
 
@@ -154,42 +184,5 @@ export default function SaveStudy({
         </Form>
       </Modal>
     </>
-  );
-}
-
-function AddUnknowSubject({
-  subjectName,
-  list,
-}: {
-  subjectName: string;
-  list: ReturnType<typeof useAsyncList>;
-}): JSX.Element {
-  const addSubject = async () => {
-    await supabase()
-      .from("Subject")
-      .insert([{ name: subjectName, image: await getPhoto() }])
-      .then(() => {
-        list.reload();
-      });
-  };
-
-  const getPhoto = async () => {
-    const res = await pexels.photos.search({ query: subjectName });
-    if ("photos" in res && res.photos.length > 0) {
-      return res.photos[0].src.medium;
-    } else {
-      let aux = await pexels.photos.random();
-      // @ts-ignore
-      return aux.src.medium;
-    }
-  };
-
-  return (
-    <div className="p-2 text-center">
-      <p className="text-gray-500">Matéria não encontrada!</p>
-      <Button onPress={addSubject} className="mt-2" size="sm" color="secondary">
-        Adicionar {subjectName}
-      </Button>
-    </div>
   );
 }

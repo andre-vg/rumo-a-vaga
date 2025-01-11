@@ -3,7 +3,7 @@ import React from "react";
 
 export default function MethodAutoComplete() {
   return (
-    <Autocomplete label="Método de estudo" name="method">
+    <Autocomplete label="Método de estudo" name="method" isRequired>
       <AutocompleteItem value="Videoaula">Videoaula</AutocompleteItem>
       <AutocompleteItem value="Livro">Livro</AutocompleteItem>
       <AutocompleteItem value="Resumo">Resumo</AutocompleteItem>
