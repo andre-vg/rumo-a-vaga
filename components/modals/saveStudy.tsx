@@ -44,7 +44,6 @@ export default function SaveStudy({
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
     await supabase()
-      // @ts-ignore
       .from("Study")
       .insert([
         {
