@@ -14,6 +14,7 @@ import { supabase } from "@/utils/supabase/client";
 import { title } from "../primitives";
 import { useSession } from "next-auth/react";
 import { pexels } from "@/utils/pexels";
+import { toast } from "sonner";
 
 type SWCharacter = {
   id: number;
@@ -25,9 +26,11 @@ type SWCharacter = {
 export default function AddSubjectModal({
   isOpen,
   onOpenChange,
+  getSubs,
 }: {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  getSubs: () => void;
 }) {
   const session = useSession();
 
@@ -46,6 +49,17 @@ export default function AddSubjectModal({
       .insert({
         userId: session.data?.user?.email,
         subjectId: subject.data ? subject.data[0].id : null,
+      })
+      .then((i) => {
+        if (i.error) {
+          toast.error("Erro ao salvar matéria", {
+            description: i.error.message,
+          });
+        } else {
+          toast.success("Matéria salva com sucesso!");
+          onOpenChange(false);
+          getSubs();
+        }
       });
   };
 
@@ -98,8 +112,8 @@ export default function AddSubjectModal({
                     inputValue={list.filterText}
                     isLoading={list.isLoading}
                     items={list.items}
-                    label="Select a character"
-                    placeholder="Type to search..."
+                    label="Selecione sua matéria"
+                    placeholder="Escreva para pesquisar..."
                     onInputChange={list.setFilterText}
                     listboxProps={{
                       emptyContent: (
@@ -120,11 +134,6 @@ export default function AddSubjectModal({
                       </AutocompleteItem>
                     )}
                   </Autocomplete>
-                  <Input
-                    label="Assunto"
-                    name="topic"
-                    placeholder="Qual o assunto de estudo?"
-                  />
                 </ModalBody>
                 <ModalFooter>
                   <Button
@@ -167,11 +176,11 @@ function AddUnknowSubject({
   const getPhoto = async () => {
     const res = await pexels.photos.search({ query: subjectName });
     if ("photos" in res && res.photos.length > 0) {
-      return res.photos[0].src.medium;
+      return res.photos[0].src.original;
     } else {
       let aux = await pexels.photos.random();
       // @ts-ignore
-      return aux.src.medium;
+      return aux.src.original;
     }
   };
 

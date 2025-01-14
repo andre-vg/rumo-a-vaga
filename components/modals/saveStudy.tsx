@@ -122,7 +122,6 @@ export default function SaveStudy({
 
                   <DateInput
                     label="Data de hoje"
-                    isReadOnly
                     defaultValue={parseDate(
                       today(getLocalTimeZone()).toString()
                     )}
