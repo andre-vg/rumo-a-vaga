@@ -26,7 +26,7 @@ export default function PageDash() {
           .select()
           .in(
             "id",
-            res.data!.map((sub) => sub.subjectId)
+            res.data!.map((sub) => Number(sub.subjectId))
           )
           .then((res) => {
             setSubs(res.data!);

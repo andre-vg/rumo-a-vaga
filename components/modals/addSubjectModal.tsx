@@ -42,7 +42,7 @@ export default function AddSubjectModal({
     let subject = await supabase()
       .from("Subject")
       .select()
-      .eq("name", data.subject);
+      .eq("name", data.subject.toString());
 
     await supabase()
       .from("ta_User_Subject")
