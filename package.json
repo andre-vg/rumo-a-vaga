@@ -6,12 +6,14 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+		"supa": "supabase"
 	},
 	"dependencies": {
 		"@auth/supabase-adapter": "^1.7.4",
 		"@nextui-org/accordion": "^2.2.7",
 		"@nextui-org/autocomplete": "^2.3.9",
+		"@nextui-org/avatar": "^2.2.6",
 		"@nextui-org/button": "2.2.8",
 		"@nextui-org/card": "^2.2.8",
 		"@nextui-org/checkbox": "^2.3.7",
@@ -28,12 +30,14 @@
 		"@nextui-org/modal": "^2.2.6",
 		"@nextui-org/navbar": "2.2.7",
 		"@nextui-org/pagination": "^2.2.7",
+		"@nextui-org/popover": "^2.3.9",
 		"@nextui-org/progress": "^2.2.5",
 		"@nextui-org/skeleton": "^2.2.4",
 		"@nextui-org/snippet": "2.2.9",
 		"@nextui-org/switch": "2.2.7",
 		"@nextui-org/system": "2.4.5",
 		"@nextui-org/theme": "2.4.4",
+		"@nextui-org/user": "^2.2.6",
 		"@react-aria/ssr": "3.9.7",
 		"@react-aria/visually-hidden": "3.8.18",
 		"@react-stately/data": "^3.12.0",
@@ -82,6 +86,5 @@
 		"tailwindcss": "3.4.16",
 		"tailwindcss-motion": "^1.0.1",
 		"typescript": "5.6.3"
-	},
-	"packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+	}
 }
