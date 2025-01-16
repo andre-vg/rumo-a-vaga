@@ -6,12 +6,12 @@ export const siteConfig = {
   navItems: [
     {
       label: "Página Inicial",
-      href: "/",
+      href: "/dashboard",
     },
-    {
-      label: "Estudos",
-      href: "/estudos",
-    },
+    // {
+    //   label: "Estudos",
+    //   href: "/estudos",
+    // },
     {
       label: "Estatísticas",	
       href: "/estatisticas",
@@ -20,7 +20,7 @@ export const siteConfig = {
   navMenuItems: [
     {
       label: "Página Inicial",
-      href: "/",
+      href: "/dashboard",
     },
     {
       label: "Estudos",
