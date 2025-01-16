@@ -42,7 +42,6 @@ export default function PageDash() {
 
   return (
     <div>
-      <Button onPress={() => signOut()}>Sign Out</Button>
       <h1 className={title({ size: "lg" })}>
         Olá, {data?.user?.name?.split(" ")[0]}
       </h1>
