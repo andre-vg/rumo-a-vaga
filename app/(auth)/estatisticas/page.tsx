@@ -20,6 +20,7 @@ import { useSession } from "next-auth/react";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
 import { SubjectChart } from "@/components/Estatisticas/Charts/subjectChart";
+import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
 
 export default function PageStats() {
   const [stats, setStats] =
@@ -106,20 +107,22 @@ function StatCards({
   stats?: Database["public"]["Tables"]["Study"]["Row"][];
   value: RangeValue<DateValue> | null;
 }) {
+
+  const [totalTime, setTotalTime] = React.useState(0);
+  const [totalQuestions, setTotalQuestions] = React.useState(0);
+
   const getTotalTime = () => {
     let total = 0;
     stats?.forEach((stat) => {
-      total += moment(stat.time, "HH:mm:ss").diff(
-        moment().startOf("day"),
-        "seconds"
-      );
+      total += Number(stat.time);
     });
+    setTotalTime(total);    
     return total;
   };
 
   const getAverageTime = () => {
     return (
-      getTotalTime() /
+      totalTime /
       (moment(value!.end!.toDate(getLocalTimeZone())).diff(
         moment(value!.start!.toDate(getLocalTimeZone())),
         "days"
@@ -133,8 +136,14 @@ function StatCards({
     stats?.forEach((stat) => {
       total += stat.questions ?? 0;
     });
+    setTotalQuestions(total);
     return total;
   };
+
+  React.useEffect(() => {
+    getTotalTime();
+    getTotalQuestions();
+  }, [stats]);
 
   return (
     <div className="grid-cols-3 grid gap-8 mt-8">
@@ -142,7 +151,7 @@ function StatCards({
         <Card>
           <CardHeader>
             <h2 className={title({ size: "sm" })}>
-              {stats && moment.utc(getTotalTime() * 1000).format("HH:mm:ss")}
+              {formatSecondsToHHMMSS(totalTime)}
             </h2>
           </CardHeader>
           <CardBody>
@@ -161,7 +170,7 @@ function StatCards({
         <Card>
           <CardHeader>
             <h2 className={title({ size: "sm" })}>
-              {stats && getTotalQuestions()}
+              {totalQuestions}
             </h2>
           </CardHeader>
           <CardBody>
@@ -172,7 +181,7 @@ function StatCards({
             <p className="text-sm">
               Isso equivale a uma média de{" "}
               {Math.round(
-                getTotalQuestions() /
+                totalQuestions /
                   (moment(value!.end!.toDate(getLocalTimeZone())).diff(
                     moment(value!.start!.toDate(getLocalTimeZone())),
                     "days"
