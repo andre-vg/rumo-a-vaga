@@ -31,6 +31,7 @@ export function SubjectChart({ chartData }: { chartData: any }) {
     // return an object with the Subject name and the time spent on it
     return chartData.reduce(
       (acc, current) => {
+        //@ts-ignore
         const subjectName = current.Subject.name;
         if (!subjectName) return acc;
         if (acc[subjectName]) {
