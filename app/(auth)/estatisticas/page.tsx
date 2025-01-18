@@ -35,7 +35,8 @@ export default function PageStats() {
   const statsQuery = supabase()
     .from("Study")
     .select("*, Subject(id, name)")
-    .eq("userId", "leticiacsfurtado@gmail.com")
+    // .eq("userId", "leticiacsfurtado@gmail.com")
+    .eq("userId", data?.user?.email?.toString() || "")
     .gte(
       "date",
       formatter
@@ -80,7 +81,7 @@ export default function PageStats() {
 
         <div className="grid grid-cols-2 w-full">
           <DateRangePicker
-            label="Birth date"
+            label="Selecione o período"
             pageBehavior="single"
             value={value}
             onChange={setValue}
