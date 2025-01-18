@@ -25,6 +25,7 @@ import {
 import MethodAutoComplete from "../Study/Form/methodAutoComplete";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import moment from "moment";
 
 export default function SaveStudy({
   isOpen,
@@ -42,6 +43,9 @@ export default function SaveStudy({
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
+    //get secons 
+    data.time = moment.duration(data.time.toString()).asSeconds().toString();
+    data.pauseTime = moment.duration(data.pauseTime.toString()).asSeconds().toString();
 
     await supabase()
       .from("Study")

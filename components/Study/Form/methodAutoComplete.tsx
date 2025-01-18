@@ -6,6 +6,7 @@ export default function MethodAutoComplete() {
     <Autocomplete label="Método de estudo" name="method" isRequired>
       <AutocompleteItem value="Videoaula">Videoaula</AutocompleteItem>
       <AutocompleteItem value="Livro">Livro</AutocompleteItem>
+      <AutocompleteItem value="Lei Seca">Lei Seca</AutocompleteItem>
       <AutocompleteItem value="Resumo">Resumo</AutocompleteItem>
       <AutocompleteItem value="Revisão">Revisão</AutocompleteItem>
       <AutocompleteItem value="Exercícios">Exercícios</AutocompleteItem>

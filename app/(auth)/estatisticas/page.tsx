@@ -1,9 +1,9 @@
 "use client";
 
-import { StatChart } from "@/components/Estatisticas/chart";
+import { QuestionChart } from "@/components/Estatisticas/Charts/questionChart";
 import { Database } from "@/database.types";
 import { supabase } from "@/utils/supabase/client";
-import React, { Suspense } from "react";
+import React from "react";
 import moment from "moment";
 import { title } from "@/components/primitives";
 import { DateRangePicker } from "@nextui-org/date-picker";
@@ -19,6 +19,7 @@ import { RangeValue } from "@react-types/shared";
 import { useSession } from "next-auth/react";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { Skeleton } from "@nextui-org/skeleton";
+import { SubjectChart } from "@/components/Estatisticas/Charts/subjectChart";
 
 export default function PageStats() {
   const [stats, setStats] =
@@ -33,9 +34,8 @@ export default function PageStats() {
   let formatter = useDateFormatter({ dateStyle: "short" });
   const statsQuery = supabase()
     .from("Study")
-    .select("*")
-    .eq("userId", data?.user?.email!)
-    // .eq("userId", "leticiacsfurtado@gmail.com")
+    .select("*, Subject(id, name)")
+    .eq("userId", "leticiacsfurtado@gmail.com")
     .gte(
       "date",
       formatter
@@ -71,25 +71,29 @@ export default function PageStats() {
   }, []);
 
   return (
-    <div>
-      <h1 className={title({ size: "lg" })}>Estatísticas</h1>
-      <h3 className="text-xl font-sub">
-        Acompanhe o seu progresso e veja como você está se saindo nos seus
-      </h3>
+    <div className="flex flex-col gap-8">
+      <div>
+        <h1 className={title({ size: "lg" })}>Estatísticas</h1>
+        <h3 className="text-xl font-sub">
+          Acompanhe o seu progresso e veja como você está se saindo nos seus
+        </h3>
 
-      <div className="grid grid-cols-2 w-full">
-        <DateRangePicker
-          label="Birth date"
-          pageBehavior="single"
-          value={value}
-          onChange={setValue}
-          visibleMonths={2}
-        />
+        <div className="grid grid-cols-2 w-full">
+          <DateRangePicker
+            label="Birth date"
+            pageBehavior="single"
+            value={value}
+            onChange={setValue}
+            visibleMonths={2}
+          />
+        </div>
+
+        <StatCards stats={stats} value={value} />
       </div>
-
-      <StatCards stats={stats} value={value} />
-      <h1>🚧🚧🚧 Novidades em Breve...</h1>
-      {/* <StatChart /> */}
+      <div className="grid grid-cols-2 gap-8">
+        <QuestionChart chartData={stats} />
+        {/* <SubjectChart chartData={stats} /> */}
+      </div>
     </div>
   );
 }
