@@ -1,7 +1,7 @@
 import { title } from "@/components/primitives";
 import Clock from "@/components/Study/clock";
 import { supabase } from "@/utils/supabase/client";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 import { CircleChevronLeft } from "lucide-react";
 
 export default async function Page({

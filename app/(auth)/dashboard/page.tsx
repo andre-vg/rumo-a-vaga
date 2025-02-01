@@ -2,8 +2,8 @@
 import { signOut, useSession } from "next-auth/react";
 import AddSubjectModal from "@/components/modals/addSubjectModal";
 import { subtitle, title } from "@/components/primitives";
-import { Button } from "@nextui-org/button";
-import { useDisclosure } from "@nextui-org/modal";
+import { Button } from "@heroui/button";
+import { useDisclosure } from "@heroui/modal";
 import { Plus } from "lucide-react";
 import React, { useEffect } from "react";
 import { supabase } from "@/utils/supabase/client";

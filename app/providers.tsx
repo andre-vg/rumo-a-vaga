@@ -3,7 +3,7 @@
 import type { ThemeProviderProps } from "next-themes";
 import { Toaster } from 'sonner';
 import * as React from "react";
-import { NextUIProvider } from "@nextui-org/system";
+import { HeroUIProvider } from "@heroui/system";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
@@ -25,11 +25,11 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <NextUIProvider navigate={router.push} locale="pt-BR">
+    <HeroUIProvider navigate={router.push} locale="pt-BR">
       <SessionProvider>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
         <Toaster richColors closeButton />
       </SessionProvider>
-    </NextUIProvider>
+    </HeroUIProvider>
   );
 }

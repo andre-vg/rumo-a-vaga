@@ -1,5 +1,5 @@
-import { Link } from "@nextui-org/link";
-import { NavbarItem } from "@nextui-org/navbar";
+import { Link } from "@heroui/link";
+import { NavbarItem } from "@heroui/navbar";
 import { AnimatePresence } from "framer-motion";
 import { motion as m } from "framer-motion";
 import React from "react";
@@ -29,7 +29,7 @@ export default function SidebarCard({
     //     </m.div>
     //   </AnimatePresence>
     // </NavbarItem>
-    <NavbarItem>
+    (<NavbarItem>
       <AnimatePresence mode="sync">
         <m.div
           initial={{
@@ -66,6 +66,6 @@ export default function SidebarCard({
           </Link>
         </m.div>
       </AnimatePresence>
-    </NavbarItem>
+    </NavbarItem>)
   );
 }

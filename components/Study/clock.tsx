@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { CircularProgress } from "@nextui-org/progress";
-import { Button } from "@nextui-org/button";
+import { CircularProgress } from "@heroui/progress";
+import { Button } from "@heroui/button";
 import { AnimatePresence, motion as m } from "framer-motion";
 import SaveStudy from "../modals/saveStudy";
-import { useDisclosure } from "@nextui-org/modal";
+import { useDisclosure } from "@heroui/modal";
 import { Time } from "@internationalized/date";
 
 export default function Clock() {

@@ -7,8 +7,8 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-} from "@nextui-org/navbar";
-import { useDisclosure } from "@nextui-org/modal";
+} from "@heroui/navbar";
+import { useDisclosure } from "@heroui/modal";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -28,10 +28,10 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { useTheme } from "next-themes";
-import { Popover, PopoverContent, PopoverTrigger } from "@nextui-org/popover";
-import { Avatar } from "@nextui-org/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
+import { Avatar } from "@heroui/avatar";
 import { signOut, useSession } from "next-auth/react";
 import SidebarCard from "./sidebarCard";
 

@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect } from "react";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Image } from "@heroui/image";
 import { title } from "../primitives";
 import { Database } from "@/database.types";
 import { PlayCircle } from "lucide-react";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 
 export default function SubjectCards({

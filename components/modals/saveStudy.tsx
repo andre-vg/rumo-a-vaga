@@ -1,21 +1,21 @@
 "use client";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Form } from "@nextui-org/form";
+import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Form } from "@heroui/form";
 import {
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 import { useAsyncList } from "@react-stately/data";
 import { supabase } from "@/utils/supabase/client";
 import { title } from "../primitives";
 import { useSession } from "next-auth/react";
 import { pexels } from "@/utils/pexels";
-import { DateInput, TimeInput } from "@nextui-org/date-input";
+import { DateInput, TimeInput } from "@heroui/date-input";
 import {
   getLocalTimeZone,
   parseDate,

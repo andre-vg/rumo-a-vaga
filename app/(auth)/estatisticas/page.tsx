@@ -6,7 +6,7 @@ import { supabase } from "@/utils/supabase/client";
 import React from "react";
 import moment from "moment";
 import { title } from "@/components/primitives";
-import { DateRangePicker } from "@nextui-org/date-picker";
+import { DateRangePicker } from "@heroui/date-picker";
 import {
   parseDate,
   getLocalTimeZone,
@@ -17,8 +17,8 @@ import {
 import { useDateFormatter } from "@react-aria/i18n";
 import { RangeValue } from "@react-types/shared";
 import { useSession } from "next-auth/react";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
-import { Skeleton } from "@nextui-org/skeleton";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Skeleton } from "@heroui/skeleton";
 import { SubjectChart } from "@/components/Estatisticas/Charts/subjectChart";
 import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
 
