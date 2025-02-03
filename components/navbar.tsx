@@ -22,9 +22,11 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { signOut, useSession } from "next-auth/react";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { body, subtitle } from "./primitives";
+import { useEffect, useState } from "react";
 
-export const Navbar = () => {
+export default function Navbar() {
   const session = useSession();
+  const [path, setPath] = useState(window.location.pathname);
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -41,11 +43,14 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "gap-1"
                 )}
-                color="foreground"
                 href={item.href}
+                data-active={item.href === path}
+                onClick={() => setPath(item.href)}
               >
+                <item.icon />
                 {item.label}
               </NextLink>
             </NavbarItem>
@@ -146,4 +151,4 @@ export const Navbar = () => {
       </NavbarMenu>
     </NextUINavbar>
   );
-};
+}

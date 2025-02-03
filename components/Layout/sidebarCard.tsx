@@ -29,7 +29,7 @@ export default function SidebarCard({
     //     </m.div>
     //   </AnimatePresence>
     // </NavbarItem>
-    (<NavbarItem>
+    <NavbarItem>
       <AnimatePresence mode="sync">
         <m.div
           initial={{
@@ -66,6 +66,6 @@ export default function SidebarCard({
           </Link>
         </m.div>
       </AnimatePresence>
-    </NavbarItem>)
+    </NavbarItem>
   );
 }

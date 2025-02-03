@@ -3,31 +3,14 @@ import {
   Navbar as Nav,
   NavbarBrand,
   NavbarContent,
-  NavbarItem,
   NavbarMenu,
-  NavbarMenuItem,
   NavbarMenuToggle,
 } from "@heroui/navbar";
 import { useDisclosure } from "@heroui/modal";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  BadgePlus,
-  BarChart,
-  CheckCircle,
-  Clock,
-  Handshake,
-  LayoutDashboard,
-  Link2,
-  LogOut,
-  Moon,
-  PlusSquare,
-  Sun,
-  TrendingUp,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
+import { Handshake, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@heroui/button";
 import { useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";

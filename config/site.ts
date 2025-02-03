@@ -1,20 +1,26 @@
+import { ChartBarBig, HomeIcon, LibraryBig } from "lucide-react";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Rumo a vaga!",
-  description: "A ferramenta que vai te ajudar a conquistar a vaga dos seus sonhos!",
+  description:
+    "A ferramenta que vai te ajudar a conquistar a vaga dos seus sonhos!",
   navItems: [
     {
       label: "Página Inicial",
       href: "/dashboard",
+      icon: HomeIcon,
     },
-    // {
-    //   label: "Estudos",
-    //   href: "/estudos",
-    // },
     {
-      label: "Estatísticas",	
+      label: "Estudos",
+      href: "/estudos",
+      icon: LibraryBig,
+    },
+    {
+      label: "Estatísticas",
       href: "/estatisticas",
+      icon: ChartBarBig,
     },
   ],
   navMenuItems: [
@@ -27,7 +33,7 @@ export const siteConfig = {
       href: "/estudos",
     },
     {
-      label: "Estatísticas",	
+      label: "Estatísticas",
       href: "/estatisticas",
     },
   ],

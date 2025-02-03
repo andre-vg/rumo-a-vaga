@@ -1,3 +1,4 @@
+const { nextui } = require("@nextui-org/theme");
 const { heroui } = require("@heroui/theme");
 
 /** @type {import('tailwindcss').Config} */
@@ -6,6 +7,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@nextui-org/theme/dist/components/(table|checkbox|form|spacer).js",
   ],
   theme: {
     extend: {
@@ -22,7 +24,7 @@ module.exports = {
   plugins: [
     heroui({
       prefix: "heroui", // prefix for themes variables
-      addCommonColors: false, // override common colors (e.g. "blue", "green", "pink").
+      addCommonColors: false, // override common colors (e.g. "blue",green,"pink").
       defaultTheme: "light", // default theme from the themes object
       defaultExtendTheme: "light", // default theme to extend on custom themes
       layout: {}, // common layout tokens (applied to all themes)
@@ -34,10 +36,10 @@ module.exports = {
         dark: {
           layout: {}, // dark theme layout tokens
           colors: {}, // dark theme colors
-        },
-        // ... custom themes
+        }, // ... custom themes
       },
     }),
     require("tailwindcss-animate"),
+    nextui(),
   ],
 };
