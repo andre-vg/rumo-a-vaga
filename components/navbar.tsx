@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const session = useSession();
-  const [path, setPath] = useState(window.location.pathname);
+  const [path, setPath] = useState("/dashboard");
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
