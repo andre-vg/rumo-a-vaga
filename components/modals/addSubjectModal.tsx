@@ -170,7 +170,7 @@ function AddUnknowSubject({
     setLoading(true);
     await supabase()
       .from("Subject")
-      .insert([{ name: subjectName, image: await getPhotoAI() }])
+      .insert([{ name: subjectName, image: await getPhoto() }])
       .then(() => {
         list.reload();
         setLoading(false);
@@ -188,17 +188,17 @@ function AddUnknowSubject({
     }
   };
 
-  const getPhotoAI = async () => {
-    const res = await fetch("/api/ai", {
-      method: "POST",
-      body: JSON.stringify({ prompt: subjectName }),
-    });
-    const data = await res.json();
+  // const getPhotoAI = async () => {
+  //   const res = await fetch("/api/ai", {
+  //     method: "POST",
+  //     body: JSON.stringify({ prompt: subjectName }),
+  //   });
+  //   const data = await res.json();
 
-    console.log(data);
+  //   console.log(data);
 
-    return data[0].url;
-  };
+  //   return data[0].url;
+  // };
 
   return (
     <div className="p-2 text-center">
