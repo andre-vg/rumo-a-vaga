@@ -23,7 +23,7 @@ import {
   today,
 } from "@internationalized/date";
 import MethodAutoComplete from "../Study/Form/methodAutoComplete";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import moment from "moment";
 
@@ -38,6 +38,7 @@ export default function SaveStudy({
 }) {
   const session = useSession();
   const { subjectId } = useParams();
+  const router = useRouter();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -69,6 +70,7 @@ export default function SaveStudy({
             ),
           });
           onOpenChange(false);
+          router.push("/dashboard");
         }
       });
   };
@@ -178,7 +180,7 @@ export default function SaveStudy({
                     Cancelar
                   </Button>
                   <Button color="primary" type="submit">
-                    Submit
+                    Gravar Estudo
                   </Button>
                 </ModalFooter>
               </>
