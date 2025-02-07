@@ -43,7 +43,8 @@ export default function AddSubjectModal({
     let subject = await supabase()
       .from("Subject")
       .select()
-      .eq("name", data.subject.toString());
+      .eq("name", data.subject.toString())
+      .limit(5);
 
     await supabase()
       .from("ta_User_Subject")
@@ -70,7 +71,8 @@ export default function AddSubjectModal({
         .from("Subject")
         .select()
         .abortSignal(signal)
-        .ilike("name", `%${filterText}%`);
+        .ilike("name", `%${filterText}%`)
+        .limit(5);
       let json = res.data as SWCharacter[];
 
       return {
@@ -115,6 +117,7 @@ export default function AddSubjectModal({
                     items={list.items}
                     label="Selecione sua matéria"
                     placeholder="Escreva para pesquisar..."
+                    errorMessage="Insira uma matéria"
                     onInputChange={list.setFilterText}
                     listboxProps={{
                       emptyContent: (
@@ -146,7 +149,7 @@ export default function AddSubjectModal({
                     Cancelar
                   </Button>
                   <Button color="primary" type="submit">
-                    Submit
+                    Adicionar
                   </Button>
                 </ModalFooter>
               </>
