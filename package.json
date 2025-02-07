@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
-    "supa": "supabase"
+    "supa": "supabase",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@auth/supabase-adapter": "^1.7.4",
