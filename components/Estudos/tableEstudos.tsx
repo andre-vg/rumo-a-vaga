@@ -22,6 +22,9 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
 import { Edit3Icon, EyeIcon, Trash2 } from "lucide-react";
+import { useDisclosure } from "@heroui/modal";
+import EditStudy from "../modals/editStudy";
+import DeleteModal from "../modals/deleteModal";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -29,12 +32,12 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export const columns = [
   { name: "Data/Tempo", uid: "name" },
-  { name: "Matéria/Tópico", uid: "role" },
-  { name: "Periodo", uid: "status" },
+  { name: "Matéria/Tópico", uid: "topic" },
+  { name: "Periodo", uid: "period" },
   { name: "Ações", uid: "actions" },
 ];
 
-const statusColorMap: Record<string, ChipProps["color"]> = {
+const periodColorMap: Record<string, ChipProps["color"]> = {
   Manhã: "primary",
   Tarde: "warning",
   Noite: "secondary",
@@ -43,8 +46,16 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
 export default function TableEstudos() {
   const [totalPages, setTotalPages] = React.useState(0);
   const [page, setPage] = React.useState<number>(1);
-  const [study, setStudy] = React.useState<any[]>([]);
+  const [study, setStudy] = React.useState<
+    Database["public"]["Tables"]["Study"]["Row"][]
+  >([]);
+  const [item, setItem] = React.useState<
+    Database["public"]["Tables"]["Study"]["Row"] | null
+  >(null);
   const { data } = useSession();
+
+  const editDisclosure = useDisclosure();
+  const deleteDisclosure = useDisclosure();
 
   const renderCell = React.useCallback(
     (
@@ -78,7 +89,7 @@ export default function TableEstudos() {
               }
             />
           );
-        case "role":
+        case "topic":
           return (
             <div className="flex flex-col">
               <p className="text-bold text-sm capitalize">
@@ -90,12 +101,11 @@ export default function TableEstudos() {
               </p>
             </div>
           );
-        case "status":
+        case "period":
           return (
             <Chip
               className={clsx("capitalize")}
-              color={statusColorMap[stud.period as string]}
-              size="sm"
+              color={periodColorMap[stud.period as string]}
               variant="flat"
             >
               {stud.period}
@@ -104,14 +114,24 @@ export default function TableEstudos() {
         case "actions":
           return (
             <div className="relative flex items-center justify-end gap-2">
-              <Tooltip content="Detalhes">
-                <EyeIcon className="text-default hover:text-white cursor-pointer transition-all duration-200" />
-              </Tooltip>
               <Tooltip content="Editar">
-                <Edit3Icon className="text-default hover:text-white cursor-pointer transition-all duration-200" />
+                <Edit3Icon
+                  onClick={() => {
+                    setItem(stud);
+                    editDisclosure.onOpen();
+                  }}
+                  className="text-default hover:text-white cursor-pointer transition-all duration-200"
+                />
               </Tooltip>
               <Tooltip color="danger" content="Deletar Estudo">
-                <Trash2 className="text-danger opacity-70 hover:opacity-100 cursor-pointer transition-all duration-200" />
+                <Trash2
+                  onClick={() => {
+                    // setItem(stud);
+                    // deleteDisclosure.onOpen();
+                    alert("Ainda não podemos deletar estudos, desculpe...");
+                  }}
+                  className="text-danger opacity-70 hover:opacity-100 cursor-pointer transition-all duration-200"
+                />
               </Tooltip>
             </div>
           );
@@ -126,8 +146,8 @@ export default function TableEstudos() {
     await supabase()
       .from("Study")
       .select("*, Subject(id, name, image)")
-        .eq("userId", data?.user?.email!)
-    //   .eq("userId", "leticiacsfurtado@gmail.com")
+      .eq("userId", data?.user?.email!)
+      //   .eq("userId", "leticiacsfurtado@gmail.com")
       .order("id", { ascending: false })
       .range((page - 1) * 10, page * 10 - 1)
       .then((res) => {
@@ -139,8 +159,8 @@ export default function TableEstudos() {
     await supabase()
       .from("Study")
       .select("*", { count: "estimated", head: true })
-        .eq("userId", data?.user?.email!)
-    //   .eq("userId", "leticiacsfurtado@gmail.com")
+      .eq("userId", data?.user?.email!)
+      //   .eq("userId", "leticiacsfurtado@gmail.com")
       .then((res) => {
         setTotalPages(res.count ?? 0);
       });
@@ -158,44 +178,55 @@ export default function TableEstudos() {
   }, [page]);
 
   return (
-    <Table
-      aria-label="Example table with custom cells"
-      bottomContent={
-        page && (
-          <div className="flex w-full justify-center">
-            <Pagination
-              isCompact
-              showControls
-              showShadow
-              color="secondary"
-              page={page ?? 1}
-              total={Math.ceil(totalPages / 10)}
-              onChange={(page) => setPage(page)}
-            />
-          </div>
-        )
-      }
-    >
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "end" : "start"}
-            className="text-md"
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={study}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Table
+        aria-label="Example table with custom cells"
+        classNames={{
+          wrapper: "mt-8",
+        }}
+        bottomContent={
+          page && (
+            <div className="flex w-full justify-center">
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color="secondary"
+                page={page ?? 1}
+                total={Math.ceil(totalPages / 10)}
+                onChange={(page) => setPage(page)}
+              />
+            </div>
+          )
+        }
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "end" : "start"}
+              className="text-md"
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={study}>
+          {(item) => (
+            <TableRow key={item.id}>
+              {(columnKey) => (
+                <TableCell>{renderCell(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <EditStudy
+        isOpen={editDisclosure.isOpen}
+        onOpenChange={editDisclosure.onOpenChange}
+        study={item as Database["public"]["Tables"]["Study"]["Row"]}
+      />
+      <DeleteModal disclosure={deleteDisclosure} />
+    </>
   );
 }
