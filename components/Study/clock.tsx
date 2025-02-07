@@ -45,7 +45,7 @@ export default function Clock() {
 
   React.useEffect(() => {
     workerRef.current = new Worker(
-      new URL("@/utils/clockWorker.js", import.meta.url)
+      new URL("@/utils/clockWorker.js", import.meta.url),
     );
     workerRef.current.onmessage = (event) => {
       setTotalSeconds(event.data);
@@ -137,9 +137,7 @@ export default function Clock() {
       <SaveStudy
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        studyTime={
-          new Time(hours, minutes, seconds)
-        }
+        studyTime={new Time(hours, minutes, seconds)}
       />
     </div>
   );

@@ -44,7 +44,7 @@ export default function Navbar() {
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  "gap-1"
+                  "gap-1",
                 )}
                 href={item.href}
                 data-active={item.href === path}

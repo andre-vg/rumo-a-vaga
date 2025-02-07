@@ -16,7 +16,7 @@ import moment from "moment";
 const chartConfig = {
   subjectName: {
     label: "Materia",
-    color: "hsl(var(--heroui-primary))"
+    color: "hsl(var(--heroui-primary))",
   },
   timeSpent: {
     label: "Tempo",
@@ -24,9 +24,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function SubjectChart({ chartData }: { chartData: any }) {
-
   const transformChartData = (
-    chartData: Database["public"]["Tables"]["Study"]["Row"][]
+    chartData: Database["public"]["Tables"]["Study"]["Row"][],
   ) => {
     // return an object with the Subject name and the time spent on it
     return chartData.reduce(
@@ -35,7 +34,7 @@ export function SubjectChart({ chartData }: { chartData: any }) {
         const subjectName = current.Subject.name;
         if (!subjectName) return acc;
         if (acc[subjectName]) {
-          acc[subjectName].timeSpent += moment(current.time).format("seconds")
+          acc[subjectName].timeSpent += moment(current.time).format("seconds");
         } else {
           acc[subjectName] = {
             subjectName: subjectName,
@@ -44,19 +43,16 @@ export function SubjectChart({ chartData }: { chartData: any }) {
         }
         return acc;
       },
-      {} as Record<string, { subjectName: string; timeSpent: string }>
+      {} as Record<string, { subjectName: string; timeSpent: string }>,
     );
   };
 
   const chartDatas = Object.values(transformChartData(chartData || []));
   console.log(chartDatas);
-  
 
   return (
     <Skeleton isLoaded={!!chartDatas}>
-      <ChartContainer
-        config={chartConfig}
-      >
+      <ChartContainer config={chartConfig}>
         <PieChart>
           <ChartTooltip
             cursor={false}

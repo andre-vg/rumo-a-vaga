@@ -3,7 +3,7 @@ let intervalId = null;
 
 onmessage = function (e) {
   switch (e.data) {
-    case 'start':
+    case "start":
       if (!intervalId) {
         intervalId = setInterval(() => {
           seconds += 1;
@@ -11,13 +11,13 @@ onmessage = function (e) {
         }, 1000);
       }
       break;
-    case 'stop':
+    case "stop":
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
       }
       break;
-    case 'reset':
+    case "reset":
       seconds = 0;
       postMessage(seconds);
       break;

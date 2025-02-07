@@ -8,7 +8,7 @@ import {
 export const fontHeading = FontSans({
   subsets: ["latin"],
   variable: "--font-heading",
-  weight:"400"
+  weight: "400",
 });
 
 export const fontSub = FontSub({

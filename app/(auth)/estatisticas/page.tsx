@@ -44,7 +44,7 @@ export default function PageStats() {
         .format(value!.start?.toDate(getLocalTimeZone()))
         .split("/")
         .reverse()
-        .join("-")
+        .join("-"),
     )
     .lte(
       "date",
@@ -52,7 +52,7 @@ export default function PageStats() {
         .format(value!.end?.toDate(getLocalTimeZone()))
         .split("/")
         .reverse()
-        .join("-")
+        .join("-"),
     );
 
   const getStats = async () => {
@@ -107,7 +107,6 @@ function StatCards({
   stats?: Database["public"]["Tables"]["Study"]["Row"][];
   value: RangeValue<DateValue> | null;
 }) {
-
   const [totalTime, setTotalTime] = React.useState(0);
   const [totalQuestions, setTotalQuestions] = React.useState(0);
 
@@ -116,7 +115,7 @@ function StatCards({
     stats?.forEach((stat) => {
       total += Number(stat.time);
     });
-    setTotalTime(total);    
+    setTotalTime(total);
     return total;
   };
 
@@ -125,7 +124,7 @@ function StatCards({
       totalTime /
       (moment(value!.end!.toDate(getLocalTimeZone())).diff(
         moment(value!.start!.toDate(getLocalTimeZone())),
-        "days"
+        "days",
       ) +
         1)
     );
@@ -169,9 +168,7 @@ function StatCards({
       <Skeleton isLoaded={!!stats}>
         <Card>
           <CardHeader>
-            <h2 className={title({ size: "sm" })}>
-              {totalQuestions}
-            </h2>
+            <h2 className={title({ size: "sm" })}>{totalQuestions}</h2>
           </CardHeader>
           <CardBody>
             <p className="text-sm">
@@ -184,9 +181,9 @@ function StatCards({
                 totalQuestions /
                   (moment(value!.end!.toDate(getLocalTimeZone())).diff(
                     moment(value!.start!.toDate(getLocalTimeZone())),
-                    "days"
+                    "days",
                   ) +
-                    1)
+                    1),
               )}{" "}
               por dia!!
             </p>

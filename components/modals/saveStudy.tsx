@@ -44,9 +44,12 @@ export default function SaveStudy({
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
-    //get secons 
+    //get secons
     data.time = moment.duration(data.time.toString()).asSeconds().toString();
-    data.pauseTime = moment.duration(data.pauseTime.toString()).asSeconds().toString();
+    data.pauseTime = moment
+      .duration(data.pauseTime.toString())
+      .asSeconds()
+      .toString();
 
     await supabase()
       .from("Study")
@@ -66,7 +69,7 @@ export default function SaveStudy({
           toast.success("Estudo salvo com sucesso!", {
             description: getDescription(
               Number(data.questions),
-              Number(data.correctQuestions)
+              Number(data.correctQuestions),
             ),
           });
           onOpenChange(false);
@@ -129,7 +132,7 @@ export default function SaveStudy({
                   <DateInput
                     label="Data de hoje"
                     defaultValue={parseDate(
-                      today(getLocalTimeZone()).toString()
+                      today(getLocalTimeZone()).toString(),
                     )}
                     name="date"
                   />

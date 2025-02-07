@@ -60,7 +60,7 @@ export default function TableEstudos() {
   const renderCell = React.useCallback(
     (
       stud: Database["public"]["Tables"]["Study"]["Row"],
-      columnKey: React.Key
+      columnKey: React.Key,
     ) => {
       const cellValue =
         stud[columnKey as keyof Database["public"]["Tables"]["Study"]["Row"]];
@@ -139,7 +139,7 @@ export default function TableEstudos() {
           return cellValue;
       }
     },
-    []
+    [],
   );
 
   async function getStudys() {

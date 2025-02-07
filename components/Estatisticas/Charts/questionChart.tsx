@@ -27,7 +27,7 @@ export function QuestionChart({
   chartData: Database["public"]["Tables"]["Study"]["Row"][] | undefined;
 }) {
   const transformChartData = (
-    chartData: Database["public"]["Tables"]["Study"]["Row"][]
+    chartData: Database["public"]["Tables"]["Study"]["Row"][],
   ) => {
     return chartData.reduce(
       (acc, current) => {
@@ -48,7 +48,7 @@ export function QuestionChart({
       {} as Record<
         string,
         { date: string; questions: number; correctQuestions: number }
-      >
+      >,
     );
   };
 

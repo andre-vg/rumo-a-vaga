@@ -13,8 +13,8 @@ export default function SubjectCards({
 }: {
   subjects: Database["public"]["Tables"]["Subject"]["Row"][];
 }) {
-    const router = useRouter();
-  
+  const router = useRouter();
+
   return (
     <>
       {subjects &&
@@ -33,9 +33,13 @@ export default function SubjectCards({
             <CardBody>
               <div className="flex justify-between items-center">
                 <h2 className={title({ size: "md" })}>{subject.name}</h2>
-                <Button size="lg" isIconOnly onPress={() => {
-                  router.push(`/study/${subject.id}`);
-                }}>
+                <Button
+                  size="lg"
+                  isIconOnly
+                  onPress={() => {
+                    router.push(`/study/${subject.id}`);
+                  }}
+                >
                   <PlayCircle size={32} className="hover:text-primary" />
                 </Button>
               </div>

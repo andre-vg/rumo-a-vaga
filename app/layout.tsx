@@ -38,7 +38,7 @@ export default function RootLayout({
           "min-h-screen bg-background font-body antialiased",
           fontBody.variable,
           fontHeading.variable,
-          fontSub.variable
+          fontSub.variable,
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>

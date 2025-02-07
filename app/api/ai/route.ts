@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   const { prompt } = await request.json();
 
   const client = await Client.connect(
-    "LLMhacker/Realtime-FLUX-Modified-Flux.Schnell-for-JA.P"
+    "LLMhacker/Realtime-FLUX-Modified-Flux.Schnell-for-JA.P",
   );
   const result = await client.predict("/generate_image", {
     prompt,

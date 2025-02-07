@@ -46,7 +46,7 @@ export default function EditStudy({
     return new Time(
       moment.utc(moment.duration(time, "seconds").asMilliseconds()).hours(),
       moment.utc(moment.duration(time, "seconds").asMilliseconds()).minutes(),
-      moment.utc(moment.duration(time, "seconds").asMilliseconds()).seconds()
+      moment.utc(moment.duration(time, "seconds").asMilliseconds()).seconds(),
     );
   };
 
@@ -76,7 +76,7 @@ export default function EditStudy({
           toast.success("Estudo salvo com sucesso!", {
             description: getDescription(
               Number(data.questions),
-              Number(data.correctQuestions)
+              Number(data.correctQuestions),
             ),
           });
           onOpenChange(false);
@@ -144,7 +144,7 @@ export default function EditStudy({
                   <DateInput
                     label="Data de hoje"
                     defaultValue={parseDate(
-                      study.date ?? today(getLocalTimeZone()).toString()
+                      study.date ?? today(getLocalTimeZone()).toString(),
                     )}
                     name="date"
                   />
