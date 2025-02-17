@@ -1,4 +1,3 @@
-const { nextui } = require("@nextui-org/theme");
 const { heroui } = require("@heroui/theme");
 
 /** @type {import('tailwindcss').Config} */
@@ -40,6 +39,5 @@ module.exports = {
       },
     }),
     require("tailwindcss-animate"),
-    nextui(),
   ],
 };
