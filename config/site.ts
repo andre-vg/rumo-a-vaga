@@ -1,4 +1,4 @@
-import { ChartBarBig, HomeIcon, LibraryBig } from "lucide-react";
+import { ChartBarBig, HomeIcon, LibraryBig, Sparkles } from "lucide-react";
 
 export type SiteConfig = typeof siteConfig;
 
@@ -22,6 +22,11 @@ export const siteConfig = {
       href: "/estatisticas",
       icon: ChartBarBig,
     },
+    {
+      label: "Novidades",
+      href: "/novidades",
+      icon: Sparkles,
+    },
   ],
   navMenuItems: [
     {
@@ -35,6 +40,10 @@ export const siteConfig = {
     {
       label: "Estatísticas",
       href: "/estatisticas",
+    },
+    {
+      label: "Novidades",
+      href: "/novidades",
     },
   ],
   links: {

@@ -36,7 +36,6 @@ export default function PageStats() {
   const statsQuery = supabase()
     .from("Study")
     .select("*, Subject(id, name)")
-    // .eq("userId", "leticiacsfurtado@gmail.com")
     .eq("userId", data?.user?.email?.toString() || "")
     .gte(
       "date",

@@ -147,7 +147,6 @@ export default function TableEstudos() {
       .from("Study")
       .select("*, Subject(id, name, image)")
       .eq("userId", data?.user?.email!)
-      //   .eq("userId", "leticiacsfurtado@gmail.com")
       .order("id", { ascending: false })
       .range((page - 1) * 10, page * 10 - 1)
       .then((res) => {
@@ -160,7 +159,6 @@ export default function TableEstudos() {
       .from("Study")
       .select("*", { count: "estimated", head: true })
       .eq("userId", data?.user?.email!)
-      //   .eq("userId", "leticiacsfurtado@gmail.com")
       .then((res) => {
         setTotalPages(res.count ?? 0);
       });

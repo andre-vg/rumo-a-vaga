@@ -11,6 +11,7 @@ import {
 import { Database } from "@/database.types";
 import { Skeleton } from "@heroui/skeleton";
 import { title } from "../../primitives";
+import moment from "moment";
 
 const chartConfig = {
   questions: {
@@ -82,7 +83,9 @@ export function QuestionChart({
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  hideLabel
+                  labelFormatter={(value) =>
+                    moment(value.split("/").reverse().join("-")).format("LL")
+                  }
                   className="w-[180px]"
                   formatter={(value, name, item, index) => (
                     <>

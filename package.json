@@ -48,7 +48,7 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-714736e-20250131",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "11.13.1",
+    "framer-motion": "^11.13.1",
     "intl-messageformat": "^10.5.0",
     "lucide-react": "^0.471.1",
     "moment": "^2.30.1",
