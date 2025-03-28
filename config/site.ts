@@ -48,8 +48,8 @@ export const siteConfig = {
   ],
   landingNavItems: [
     {
-      label: "Página Inicial",
-      href: "/dashboard",
+      label: "Home",
+      href: "/",
       icon: HomeIcon,
     },
   ],

@@ -1,3 +1,4 @@
+import { signIn } from "next-auth/react";
 import { InteractiveHoverButton } from "../magicui/interactive-hover-button";
 import { subtitle, title } from "../primitives";
 
@@ -28,7 +29,10 @@ export default function Hero() {
         O aplicativo que vai te ajudar a organizar seus estudos de forma simples
         e eficiente.
       </h2>
-      <InteractiveHoverButton onClick={() => {}} color="bg-primary">
+      <InteractiveHoverButton
+        onClick={() => signIn("google", { redirectTo: "/dashboard" })}
+        color="bg-primary"
+      >
         Começar
       </InteractiveHoverButton>
     </div>

@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 
 export default function NavbarLanding() {
   const session = useSession();
-  const [path, setPath] = useState("/dashboard");
+  const [path, setPath] = useState("/");
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -114,8 +114,9 @@ export default function NavbarLanding() {
         <NavbarItem>
           <Button
             onPress={() => signIn("google", { redirectTo: "/dashboard" })}
+            color="primary"
           >
-            Sign in
+            Entrar
           </Button>
         </NavbarItem>
       </NavbarContent>
