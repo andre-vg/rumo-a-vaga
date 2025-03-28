@@ -32,10 +32,6 @@ export default function SidebarCard({
     <NavbarItem>
       <AnimatePresence mode="sync">
         <m.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
           animate={{
             opacity: 1,
             y: 0,
@@ -44,6 +40,10 @@ export default function SidebarCard({
             },
           }}
           exit={{
+            opacity: 0,
+            y: 20,
+          }}
+          initial={{
             opacity: 0,
             y: 20,
           }}
@@ -57,9 +57,9 @@ export default function SidebarCard({
           >
             {icon}
             <m.p
-              initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: "auto" }}
               exit={{ opacity: 0, width: ["auto", "auto", 0] }}
+              initial={{ opacity: 0, width: 0 }}
             >
               {label}
             </m.p>

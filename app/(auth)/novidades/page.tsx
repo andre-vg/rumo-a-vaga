@@ -1,6 +1,7 @@
+import React from "react";
+
 import { TimelineSection } from "@/components/Novidades/timelineSection";
 import { body, title } from "@/components/primitives";
-import React from "react";
 
 export default function PageNews() {
   return (

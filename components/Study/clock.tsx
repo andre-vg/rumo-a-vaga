@@ -5,6 +5,7 @@ import { CircularProgress } from "@heroui/progress";
 import { Time } from "@internationalized/date";
 import { AnimatePresence, motion as m } from "framer-motion";
 import React from "react";
+
 import ClockSettingsDrawer from "../modals/clockSettingsModal";
 import SaveStudy from "../modals/saveStudy";
 
@@ -47,7 +48,7 @@ export default function Clock() {
 
   React.useEffect(() => {
     workerRef.current = new Worker(
-      new URL("@/utils/clockWorker.js", import.meta.url)
+      new URL("@/utils/clockWorker.js", import.meta.url),
     );
     workerRef.current.onmessage = (event) => {
       setTotalSeconds(event.data);
@@ -80,6 +81,7 @@ export default function Clock() {
           track: "stroke-primary/10",
           value: "text-3xl font-semibold text-white",
         }}
+        formatOptions={{ style: "decimal" }}
         label={
           <span className="text-5xl font-semibold text-white">
             {hours.toString().padStart(2, "0")} :{" "}
@@ -87,35 +89,34 @@ export default function Clock() {
             {seconds.toString().padStart(2, "0")}
           </span>
         }
-        formatOptions={{ style: "decimal" }}
+        maxValue={60}
         strokeWidth={3}
         value={seconds}
-        maxValue={60}
       />
       <div className="flex gap-4 mt-4">
         <Button
-          size="lg"
           color="default"
-          onPress={resetClock}
           isDisabled={
             isRunning || (hours === 0 && minutes === 0 && seconds === 0)
           }
+          size="lg"
+          onPress={resetClock}
         >
           Reiniciar
         </Button>
         <Button
-          size="lg"
           color="success"
-          onPress={startClock}
           isDisabled={isRunning}
+          size="lg"
+          onPress={startClock}
         >
           Start
         </Button>
         <Button
-          size="lg"
           color="danger"
-          onPress={stopClock}
           isDisabled={!isRunning}
+          size="lg"
+          onPress={stopClock}
         >
           Parar
         </Button>
@@ -123,10 +124,10 @@ export default function Clock() {
       <AnimatePresence>
         {seconds >= 5 && (
           <m.div
-            initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
             className="mt-4"
+            exit={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: -50 }}
           >
             <Button
               color="primary"
@@ -143,8 +144,8 @@ export default function Clock() {
       </AnimatePresence>
       <SaveStudy
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
         studyTime={new Time(hours, minutes, seconds)}
+        onOpenChange={onOpenChange}
       />
       <ClockSettingsDrawer {...clockSettings} />
     </div>

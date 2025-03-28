@@ -8,23 +8,24 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-
 import { User } from "@heroui/user";
 import { Chip, ChipProps } from "@heroui/chip";
 import { Tooltip } from "@heroui/tooltip";
-import { supabase } from "@/utils/supabase/client";
 import { useSession } from "next-auth/react";
 import { Pagination } from "@heroui/pagination";
-import { QueryData } from "@supabase/supabase-js";
-import { Database } from "@/database.types";
 import clsx from "clsx";
 import moment from "moment";
+
 import "moment/locale/pt-br";
-import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
-import { Edit3Icon, EyeIcon, Trash2 } from "lucide-react";
+import { Edit3Icon, Trash2 } from "lucide-react";
 import { useDisclosure } from "@heroui/modal";
+
 import EditStudy from "../modals/editStudy";
 import DeleteModal from "../modals/deleteModal";
+
+import { Database } from "@/database.types";
+import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
+import { supabase } from "@/utils/supabase/client";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -75,7 +76,6 @@ export default function TableEstudos() {
                 src: stud.Subject.image,
                 size: "lg",
               }}
-              name={cellValue}
               description={
                 <>
                   <p className="text-white text-sm">
@@ -87,6 +87,7 @@ export default function TableEstudos() {
                   </p>
                 </>
               }
+              name={cellValue}
             />
           );
         case "topic":
@@ -116,21 +117,21 @@ export default function TableEstudos() {
             <div className="relative flex items-center justify-end gap-2">
               <Tooltip content="Editar">
                 <Edit3Icon
+                  className="text-default hover:text-white cursor-pointer transition-all duration-200"
                   onClick={() => {
                     setItem(stud);
                     editDisclosure.onOpen();
                   }}
-                  className="text-default hover:text-white cursor-pointer transition-all duration-200"
                 />
               </Tooltip>
               <Tooltip color="danger" content="Deletar Estudo">
                 <Trash2
+                  className="text-danger opacity-70 hover:opacity-100 cursor-pointer transition-all duration-200"
                   onClick={() => {
                     // setItem(stud);
                     // deleteDisclosure.onOpen();
                     alert("Ainda não podemos deletar estudos, desculpe...");
                   }}
-                  className="text-danger opacity-70 hover:opacity-100 cursor-pointer transition-all duration-200"
                 />
               </Tooltip>
             </div>
@@ -179,9 +180,6 @@ export default function TableEstudos() {
     <>
       <Table
         aria-label="Example table with custom cells"
-        classNames={{
-          wrapper: "mt-8",
-        }}
         bottomContent={
           page && (
             <div className="flex w-full justify-center">
@@ -197,6 +195,9 @@ export default function TableEstudos() {
             </div>
           )
         }
+        classNames={{
+          wrapper: "mt-8",
+        }}
       >
         <TableHeader columns={columns}>
           {(column) => (
@@ -221,8 +222,8 @@ export default function TableEstudos() {
       </Table>
       <EditStudy
         isOpen={editDisclosure.isOpen}
-        onOpenChange={editDisclosure.onOpenChange}
         study={item as Database["public"]["Tables"]["Study"]["Row"]}
+        onOpenChange={editDisclosure.onOpenChange}
       />
       <DeleteModal disclosure={deleteDisclosure} />
     </>

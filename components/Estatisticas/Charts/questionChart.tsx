@@ -1,5 +1,10 @@
 "use client";
 import { Bar, BarChart, XAxis } from "recharts";
+import { Skeleton } from "@heroui/skeleton";
+import moment from "moment";
+
+import { title } from "../../primitives";
+
 import {
   ChartConfig,
   ChartContainer,
@@ -9,9 +14,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Database } from "@/database.types";
-import { Skeleton } from "@heroui/skeleton";
-import { title } from "../../primitives";
-import moment from "moment";
 
 const chartConfig = {
   questions: {
@@ -28,17 +30,18 @@ export function QuestionChart({
   chartData: Database["public"]["Tables"]["Study"]["Row"][] | undefined;
 }) {
   const transformChartData = (
-    chartData: Database["public"]["Tables"]["Study"]["Row"][]
+    chartData: Database["public"]["Tables"]["Study"]["Row"][],
   ) => {
     return chartData.reduce(
       (acc, current) => {
         const date = current.date;
+
         if (!date) return acc;
         if (acc[date]) {
           acc[date].questions += current.questions ?? 0;
           acc[date].correctQuestions += current.correctQuestions ?? 0;
           acc[date].percentage = Math.round(
-            (acc[date].correctQuestions / acc[date].questions) * 100
+            (acc[date].correctQuestions / acc[date].questions) * 100,
           );
         } else {
           acc[date] = {
@@ -46,10 +49,12 @@ export function QuestionChart({
             questions: current.questions ?? 0,
             correctQuestions: current.correctQuestions ?? 0,
             percentage: Math.round(
-              ((current.correctQuestions ?? 0) / (current.questions ?? 1)) * 100
+              ((current.correctQuestions ?? 0) / (current.questions ?? 1)) *
+                100,
             ),
           };
         }
+
         return acc;
       },
       {} as Record<
@@ -60,7 +65,7 @@ export function QuestionChart({
           correctQuestions: number;
           percentage: number;
         }
-      >
+      >,
     );
   };
 
@@ -75,17 +80,14 @@ export function QuestionChart({
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={chartDatas}>
             <XAxis
+              axisLine={false}
               dataKey="date"
               tickLine={false}
               tickMargin={10}
-              axisLine={false}
             />
             <ChartTooltip
               content={
                 <ChartTooltipContent
-                  labelFormatter={(value) =>
-                    moment(value.split("/").reverse().join("-")).format("LL")
-                  }
                   className="w-[180px]"
                   formatter={(value, name, item, index) => (
                     <>
@@ -111,6 +113,9 @@ export function QuestionChart({
                       )}
                     </>
                   )}
+                  labelFormatter={(value) =>
+                    moment(value.split("/").reverse().join("-")).format("LL")
+                  }
                 />
               }
               cursor={false}

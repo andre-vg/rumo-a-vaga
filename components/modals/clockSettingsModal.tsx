@@ -8,11 +8,12 @@ import {
   DrawerBody,
   DrawerFooter,
 } from "@heroui/drawer";
-import React, { useEffect } from "react";
-import { title } from "../primitives";
+import React from "react";
 import { Checkbox } from "@heroui/checkbox";
 import { Time } from "@internationalized/date";
 import moment from "moment";
+
+import { title } from "../primitives";
 moment.locale("pt-br");
 
 export default function ClockSettingsDrawer({
@@ -27,11 +28,12 @@ export default function ClockSettingsDrawer({
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
+
     console.log(data);
   };
 
   return (
-    <Drawer isOpen={isOpen} onOpenChange={onOpenChange} backdrop="opaque">
+    <Drawer backdrop="opaque" isOpen={isOpen} onOpenChange={onOpenChange}>
       <Form className="w-full " validationBehavior="native" onSubmit={onSubmit}>
         <DrawerContent>
           {(onClose) => (
@@ -46,14 +48,14 @@ export default function ClockSettingsDrawer({
               </DrawerHeader>
               <DrawerBody>
                 <TimeInput
+                  granularity="second"
                   label="Quanto tempo você quer estudar?"
                   labelPlacement="outside"
+                  name="time"
                   value={time}
                   onChange={(value) => {
                     setTime(value);
                   }}
-                  granularity="second"
-                  name="time"
                 />
                 <p className="text-sm text-gray-500">
                   Apx. {time && moment.duration(time).humanize()}

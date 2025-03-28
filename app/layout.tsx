@@ -38,11 +38,11 @@ export default function RootLayout({
           "min-h-screen bg-background font-body antialiased",
           fontBody.variable,
           fontHeading.variable,
-          fontSub.variable
+          fontSub.variable,
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
+          <div className="relative flex flex-col h-full min-h-screen bg-foreground-100">
             <main className="container mx-auto max-w-7xl px-6 flex-grow">
               {children}
             </main>

@@ -8,6 +8,7 @@ export default function MethodAutoComplete({
 }) {
   return (
     <Autocomplete
+      isRequired
       defaultSelectedKey={
         defaultSelectedKey as
           | "Videoaula"
@@ -22,7 +23,6 @@ export default function MethodAutoComplete({
       }
       label="Método de estudo"
       name="method"
-      isRequired
     >
       <AutocompleteItem key="Videoaula" value="Videoaula">
         Videoaula

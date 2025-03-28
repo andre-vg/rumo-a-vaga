@@ -1,35 +1,51 @@
 "use client";
-import {
-  Navbar as NextUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
-  NavbarBrand,
-  NavbarItem,
-  NavbarMenuItem,
-} from "@heroui/navbar";
-import { Button } from "@heroui/button";
 import { Avatar } from "@heroui/avatar";
-import { Kbd } from "@heroui/kbd";
+import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-import { Input } from "@heroui/input";
+import {
+  NavbarContent,
+  NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
+  Navbar as NextUINavbar,
+} from "@heroui/navbar";
 import { link as linkStyles } from "@heroui/theme";
-import NextLink from "next/link";
 import clsx from "clsx";
+import NextLink from "next/link";
+import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
+import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
-import { signOut, useSession } from "next-auth/react";
-import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
-import { body, subtitle } from "./primitives";
-import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const session = useSession();
   const [path, setPath] = useState("/dashboard");
 
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
+    <NextUINavbar
+      classNames={{
+        base: [
+          `border-primary bg-transparent justify-center items-center backdrop-blur-none`,
+        ],
+        wrapper: [
+          "flex justify-between transition-all duration-500 ease-in-out items-center",
+          "xl:px-8 xl:py-8 pl-0 bg-background backdrop-blur-sm",
+          "xl:mt-0 xl:border-0 xl:rounded-xl xl:shadow-none",
+        ],
+        item: [
+          "flex",
+          "relative",
+          "h-full",
+          "items-center",
+          "text-default-500 hover:text-primary",
+        ],
+      }}
+      maxWidth="xl"
+      position="sticky"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         {/* <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -46,8 +62,8 @@ export default function Navbar() {
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
                   "gap-1",
                 )}
-                href={item.href}
                 data-active={item.href === path}
+                href={item.href}
                 onClick={() => setPath(item.href)}
               >
                 <item.icon />
@@ -74,7 +90,7 @@ export default function Navbar() {
           </Link> */}
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem></NavbarItem>
+        <NavbarItem />
         {/* <NavbarItem className="hidden md:flex">
           <Button
             isExternal
@@ -88,15 +104,15 @@ export default function Navbar() {
           </Button>
         </NavbarItem> */}
         {session.data?.user?.image && (
-          <Popover placement="bottom" showArrow>
+          <Popover showArrow placement="bottom">
             <PopoverTrigger className="cursor-pointer">
               <Avatar
                 isBordered
                 color="primary"
-                src={session.data?.user?.image}
                 imgProps={{
                   referrerPolicy: "no-referrer",
                 }}
+                src={session.data?.user?.image}
               />
             </PopoverTrigger>
             <PopoverContent className="p-4">
@@ -112,8 +128,8 @@ export default function Navbar() {
                 <Button
                   fullWidth
                   color="danger"
-                  onPress={() => signOut()}
                   variant="flat"
+                  onPress={() => signOut()}
                 >
                   Sair
                 </Button>

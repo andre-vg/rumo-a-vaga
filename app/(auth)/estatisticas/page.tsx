@@ -1,31 +1,30 @@
 "use client";
 
 import { QuestionChart } from "@/components/Estatisticas/Charts/questionChart";
-import { Database } from "@/database.types";
-import { supabase } from "@/utils/supabase/client";
-import React from "react";
-import moment from "moment";
 import { title } from "@/components/primitives";
+import { Database } from "@/database.types";
+import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
+import { supabase } from "@/utils/supabase/client";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 import { DateRangePicker } from "@heroui/date-picker";
+import { Skeleton } from "@heroui/skeleton";
 import {
-  parseDate,
-  getLocalTimeZone,
   DateValue,
-  today,
+  getLocalTimeZone,
+  parseDate,
   startOfMonth,
+  today,
 } from "@internationalized/date";
 import { useDateFormatter } from "@react-aria/i18n";
 import { RangeValue } from "@react-types/shared";
+import moment from "moment";
 import { useSession } from "next-auth/react";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import { Skeleton } from "@heroui/skeleton";
-import { SubjectChart } from "@/components/Estatisticas/Charts/subjectChart";
-import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
+import React from "react";
 
 export default function PageStats() {
   const [stats, setStats] =
     React.useState<Database["public"]["Tables"]["Study"]["Row"][]>();
-  const [value, setValue] = React.useState<RangeValue<DateValue> | null>({
+  const [value, setValue] = React.useState<RangeValue<DateValue> | null | undefined>({
     start: parseDate(startOfMonth(today(getLocalTimeZone())).toString()),
     end: parseDate(today(getLocalTimeZone()).toString()),
   });
@@ -81,14 +80,18 @@ export default function PageStats() {
 
         <div className="grid grid-cols-2 w-full">
           <DateRangePicker
+          classNames={{
+            inputWrapper:"bg-background"
+          }}
             label="Selecione o período"
             pageBehavior="single"
+            //@ts-ignore
             value={value}
             onChange={setValue}
             visibleMonths={2}
           />
         </div>
-
+{/** @ts-ignore */}
         <StatCards stats={stats} value={value} />
       </div>
       <div className="grid grid-cols-2 gap-8">

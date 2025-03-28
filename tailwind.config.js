@@ -30,11 +30,41 @@ module.exports = {
       themes: {
         light: {
           layout: {}, // light theme layout tokens
-          colors: {}, // light theme colors
+          colors: {
+            primary: {
+              DEFAULT: "#9b62ea",
+              50: "#f9f6fe",
+              100: "#f1eafd",
+              200: "#e5d8fc",
+              300: "#d2baf8",
+              400: "#b68df3",
+              500: "#9b62ea",
+              600: "#8849dd",
+              700: "#6f30c0",
+              800: "#5f2c9d",
+              900: "#4e247f",
+              950: "#320e5d",
+            },
+          }, // light theme colors
         },
         dark: {
           layout: {}, // dark theme layout tokens
-          colors: {}, // dark theme colors
+          colors: {
+            primary: {
+              DEFAULT: "#9b62ea",
+              50: "#f9f6fe",
+              100: "#f1eafd",
+              200: "#e5d8fc",
+              300: "#d2baf8",
+              400: "#b68df3",
+              500: "#9b62ea",
+              600: "#8849dd",
+              700: "#6f30c0",
+              800: "#5f2c9d",
+              900: "#4e247f",
+              950: "#320e5d",
+            },
+          }, // dark theme colors
         }, // ... custom themes
       },
     }),

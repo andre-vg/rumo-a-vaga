@@ -1,17 +1,15 @@
 "use client";
-import { Bar, BarChart, Pie, PieChart, XAxis } from "recharts";
+import { Pie, PieChart } from "recharts";
+import { Skeleton } from "@heroui/skeleton";
+import moment from "moment";
+
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Database } from "@/database.types";
-import { Skeleton } from "@heroui/skeleton";
-import { title } from "../../primitives";
-import moment from "moment";
 
 const chartConfig = {
   subjectName: {
@@ -32,6 +30,7 @@ export function SubjectChart({ chartData }: { chartData: any }) {
       (acc, current) => {
         //@ts-ignore
         const subjectName = current.Subject.name;
+
         if (!subjectName) return acc;
         if (acc[subjectName]) {
           acc[subjectName].timeSpent += moment(current.time).format("seconds");
@@ -41,6 +40,7 @@ export function SubjectChart({ chartData }: { chartData: any }) {
             timeSpent: current.time || "",
           };
         }
+
         return acc;
       },
       {} as Record<string, { subjectName: string; timeSpent: string }>,
@@ -48,6 +48,7 @@ export function SubjectChart({ chartData }: { chartData: any }) {
   };
 
   const chartDatas = Object.values(transformChartData(chartData || []));
+
   console.log(chartDatas);
 
   return (
@@ -55,8 +56,8 @@ export function SubjectChart({ chartData }: { chartData: any }) {
       <ChartContainer config={chartConfig}>
         <PieChart>
           <ChartTooltip
-            cursor={false}
             content={<ChartTooltipContent hideLabel />}
+            cursor={false}
           />
           <Pie data={chartDatas} dataKey="timeSpent" nameKey="subjectName" />
         </PieChart>

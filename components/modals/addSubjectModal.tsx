@@ -1,6 +1,5 @@
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
 import { Form } from "@heroui/form";
 import {
   Modal,
@@ -10,12 +9,14 @@ import {
   ModalHeader,
 } from "@heroui/modal";
 import { useAsyncList } from "@react-stately/data";
-import { supabase } from "@/utils/supabase/client";
-import { title } from "../primitives";
 import { useSession } from "next-auth/react";
-import { pexels } from "@/utils/pexels";
 import { toast } from "sonner";
 import { useState } from "react";
+
+import { title } from "../primitives";
+
+import { pexels } from "@/utils/pexels";
+import { supabase } from "@/utils/supabase/client";
 
 type SWCharacter = {
   id: number;
@@ -86,11 +87,11 @@ export default function AddSubjectModal({
       <Modal
         isOpen={isOpen}
         placement="top-center"
-        onOpenChange={onOpenChange}
         onClose={() => {
           list.removeSelectedItems();
           list.setFilterText("");
         }}
+        onOpenChange={onOpenChange}
       >
         <Form
           className="w-full "
@@ -111,14 +112,11 @@ export default function AddSubjectModal({
                 <ModalBody>
                   <Autocomplete
                     isRequired
-                    name="subject"
+                    errorMessage="Insira uma matéria"
                     inputValue={list.filterText}
                     isLoading={list.isLoading}
                     items={list.items}
                     label="Selecione sua matéria"
-                    placeholder="Escreva para pesquisar..."
-                    errorMessage="Insira uma matéria"
-                    onInputChange={list.setFilterText}
                     listboxProps={{
                       emptyContent: (
                         <AddUnknowSubject
@@ -127,12 +125,15 @@ export default function AddSubjectModal({
                         />
                       ),
                     }}
+                    name="subject"
+                    placeholder="Escreva para pesquisar..."
+                    onInputChange={list.setFilterText}
                   >
                     {(item) => (
                       <AutocompleteItem
                         key={item.name}
-                        value={item.id}
                         className="capitalize"
+                        value={item.id}
                       >
                         {item.name}
                       </AutocompleteItem>
@@ -182,10 +183,12 @@ function AddUnknowSubject({
 
   const getPhoto = async () => {
     const res = await pexels.photos.search({ query: subjectName });
+
     if ("photos" in res && res.photos.length > 0) {
       return res.photos[0].src.original;
     } else {
       let aux = await pexels.photos.random();
+
       // @ts-ignore
       return aux.src.original;
     }
@@ -207,11 +210,11 @@ function AddUnknowSubject({
     <div className="p-2 text-center">
       <p className="text-gray-500">Matéria não encontrada!</p>
       <Button
-        isLoading={loading}
-        onPress={addSubject}
         className="mt-2"
-        size="sm"
         color="secondary"
+        isLoading={loading}
+        size="sm"
+        onPress={addSubject}
       >
         Adicionar {subjectName}
       </Button>

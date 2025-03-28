@@ -6,8 +6,6 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
 } from "@heroui/navbar";
-import { useDisclosure } from "@heroui/modal";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Handshake, LogOut, Moon, Sun } from "lucide-react";
@@ -16,6 +14,7 @@ import { useTheme } from "next-themes";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { Avatar } from "@heroui/avatar";
 import { signOut, useSession } from "next-auth/react";
+
 import SidebarCard from "./sidebarCard";
 
 export default function SideBar() {
@@ -35,23 +34,22 @@ export default function SideBar() {
   return (
     <>
       <motion.div
-        initial={{
-          opacity: 0.5,
-          x: -150,
-        }}
+        ref={ref}
         animate={{
           opacity: 1,
           x: 0,
+        }}
+        className="col-span-1 w-max"
+        initial={{
+          opacity: 0.5,
+          x: -150,
         }}
         transition={{
           duration: 0.5,
           type: "spring",
         }}
-        ref={ref}
-        className="col-span-1 w-max"
       >
         <Nav
-          isMenuOpen={menuOpen}
           classNames={{
             base: [
               "lg:bg-background dark:lg:bg-primary-950 lg:fixed lg:w-max lg:h-[calc(100vh-6rem)] lg:data-[hover=true]:w-72 lg:items-start lg:ml-12 lg:mt-12",
@@ -73,6 +71,7 @@ export default function SideBar() {
             ],
             brand: "flex-grow-0",
           }}
+          isMenuOpen={menuOpen}
         >
           <NavbarContent className="hidden w-full items-start justify-center gap-4 px-0 lg:flex lg:flex-col lg:data-[justify=start]:justify-between">
             <div className="flex w-full flex-col gap-8">
@@ -85,15 +84,15 @@ export default function SideBar() {
                   <SidebarCard key={index} {...item} index={index} />
                 ))}
                 {session.data?.user?.image && (
-                  <Popover placement="bottom" showArrow>
+                  <Popover showArrow placement="bottom">
                     <PopoverTrigger className="cursor-pointer">
                       <Avatar
                         isBordered
                         color="primary"
-                        src={session.data?.user?.image}
                         imgProps={{
                           referrerPolicy: "no-referrer",
                         }}
+                        src={session.data?.user?.image}
                       />
                     </PopoverTrigger>
                     <PopoverContent className="p-4">
@@ -109,8 +108,8 @@ export default function SideBar() {
                         <Button
                           fullWidth
                           color="danger"
-                          onPress={() => signOut()}
                           variant="flat"
+                          onPress={() => signOut()}
                         >
                           Sair
                         </Button>
@@ -124,8 +123,8 @@ export default function SideBar() {
             <div className="grid w-full grid-cols-2 gap-x-2 gap-y-4 py-2">
               <AnimatePresence mode="sync">
                 <Button
-                  id="rybena-sidebar-modos"
                   fullWidth
+                  id="rybena-sidebar-modos"
                   onPress={() => {
                     theme === "light" ? setTheme("dark") : setTheme("light");
                   }}
@@ -143,9 +142,9 @@ export default function SideBar() {
                 >
                   <LogOut size={24} />
                   <motion.p
-                    initial={{ opacity: 0, width: 0 }}
                     animate={{ opacity: 1, width: "auto" }}
                     exit={{ opacity: 0, width: ["auto", "auto", 0] }}
+                    initial={{ opacity: 0, width: 0 }}
                   >
                     Sair
                   </motion.p>
@@ -159,8 +158,8 @@ export default function SideBar() {
               <RybenaLogoShort />
             </NavbarBrand> */}
             <NavbarMenuToggle
-              onClick={() => setMenuOpen(!menuOpen)}
               className="lg:hidden"
+              onClick={() => setMenuOpen(!menuOpen)}
             />
           </NavbarContent>
           <NavbarMenu className="justify-between backdrop-blur-lg">
@@ -172,9 +171,9 @@ export default function SideBar() {
 
             <div className="flex items-center justify-between gap-4 pb-8">
               <Button
+                fullWidth
                 id="rybena-sidebar-modos"
                 size="lg"
-                fullWidth
                 onPress={() => {
                   theme === "light" ? setTheme("dark") : setTheme("light");
                 }}
@@ -184,8 +183,8 @@ export default function SideBar() {
               <Button
                 fullWidth
                 color="danger"
-                variant="flat"
                 size="lg"
+                variant="flat"
                 onPress={() => {
                   signOut();
                 }}

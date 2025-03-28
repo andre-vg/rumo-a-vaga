@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@heroui/button";
 import {
-    SiFacebook,
-    SiGithub,
-    SiInstagram,
-    SiX,
+  SiFacebook,
+  SiGithub,
+  SiInstagram,
+  SiX,
 } from "@icons-pack/react-simple-icons";
 import { LibraryBig, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
@@ -26,16 +26,16 @@ export function Footer() {
               novidades em breve.
             </p>
             <div className="flex space-x-3">
-              <Button isIconOnly variant="ghost" aria-label="Facebook">
+              <Button isIconOnly aria-label="Facebook" variant="ghost">
                 <SiFacebook className="h-5 w-5" />
               </Button>
-              <Button isIconOnly variant="ghost" aria-label="Twitter">
+              <Button isIconOnly aria-label="Twitter" variant="ghost">
                 <SiX className="h-5 w-5" />
               </Button>
-              <Button isIconOnly variant="ghost" aria-label="Instagram">
+              <Button isIconOnly aria-label="Instagram" variant="ghost">
                 <SiInstagram className="h-5 w-5" />
               </Button>
-              <Button isIconOnly variant="ghost" aria-label="GitHub">
+              <Button isIconOnly aria-label="GitHub" variant="ghost">
                 <SiGithub className="h-5 w-5" />
               </Button>
             </div>
@@ -44,8 +44,8 @@ export function Footer() {
             <h4 className="text-lg font-semibold">Links Rápidos</h4>
             <nav className="flex flex-col space-y-2">
               <Link
-                href="#"
                 className="text-muted-foreground hover:text-foreground transition-colors"
+                href="#"
               >
                 Home
               </Link>
@@ -85,13 +85,13 @@ export function Footer() {
             reservados.
           </p>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <Link href="#" className="hover:text-foreground transition-colors">
+            <Link className="hover:text-foreground transition-colors" href="#">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-foreground transition-colors">
+            <Link className="hover:text-foreground transition-colors" href="#">
               Terms of Service
             </Link>
-            <Link href="#" className="hover:text-foreground transition-colors">
+            <Link className="hover:text-foreground transition-colors" href="#">
               Cookies Settings
             </Link>
           </nav>

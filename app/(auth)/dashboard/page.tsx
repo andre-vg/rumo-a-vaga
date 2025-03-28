@@ -1,12 +1,13 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
-import AddSubjectModal from "@/components/modals/addSubjectModal";
-import { subtitle, title } from "@/components/primitives";
 import { Button } from "@heroui/button";
 import { useDisclosure } from "@heroui/modal";
 import { Plus } from "lucide-react";
+import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
+
 import { supabase } from "@/utils/supabase/client";
+import { subtitle, title } from "@/components/primitives";
+import AddSubjectModal from "@/components/modals/addSubjectModal";
 import SubjectCards from "@/components/Dashboard/subjectCards";
 
 export default function PageDash() {
@@ -48,7 +49,11 @@ export default function PageDash() {
 
       <h1 className={title({ size: "md" })}>Vamos começar?</h1>
       <h3 className={subtitle()}>A aprovação não virá sozinha!</h3>
-      <Button onPress={onOpen} startContent={<Plus size={20} />}>
+      <Button
+        color="primary"
+        startContent={<Plus size={20} />}
+        onPress={onOpen}
+      >
         Adicionar matéria
       </Button>
       <div className="grid grid-cols-2 gap-4 mt-4">

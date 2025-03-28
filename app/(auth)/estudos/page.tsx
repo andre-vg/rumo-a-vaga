@@ -1,6 +1,7 @@
+import React from "react";
+
 import TableEstudos from "@/components/Estudos/tableEstudos";
 import { subtitle, title } from "@/components/primitives";
-import React from "react";
 
 export default function PageEstudos() {
   return (

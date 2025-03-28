@@ -1,8 +1,9 @@
 "use client";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
 import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
+import { DateInput, TimeInput } from "@heroui/date-input";
 import { Form } from "@heroui/form";
+import { Input } from "@heroui/input";
 import {
   Modal,
   ModalBody,
@@ -10,22 +11,21 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@heroui/modal";
-import { useAsyncList } from "@react-stately/data";
-import { supabase } from "@/utils/supabase/client";
-import { title } from "../primitives";
-import { useSession } from "next-auth/react";
-import { pexels } from "@/utils/pexels";
-import { DateInput, TimeInput } from "@heroui/date-input";
 import {
   getLocalTimeZone,
   parseDate,
   Time,
   today,
 } from "@internationalized/date";
-import MethodAutoComplete from "../Study/Form/methodAutoComplete";
+import moment from "moment";
+import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
-import moment from "moment";
+
+import MethodAutoComplete from "../Study/Form/methodAutoComplete";
+import { title } from "../primitives";
+
+import { supabase } from "@/utils/supabase/client";
 
 export default function SaveStudy({
   isOpen,
@@ -44,6 +44,7 @@ export default function SaveStudy({
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
+
     //get secons
     data.time = moment.duration(data.time.toString()).asSeconds().toString();
     data.pauseTime = moment
@@ -80,6 +81,7 @@ export default function SaveStudy({
 
   const getDescription = async (questions: number, correct: number) => {
     const percentage = (correct / questions) * 100;
+
     if (percentage >= 90) {
       return "Você está indo muito bem! Continue assim!";
     } else if (percentage >= 70) {
@@ -115,32 +117,33 @@ export default function SaveStudy({
                 <ModalBody className="grid gap-3">
                   <div className="grid grid-cols-2 gap-3">
                     <TimeInput
-                      label="Tempo de estudo"
                       defaultValue={studyTime}
                       granularity="second"
+                      label="Tempo de estudo"
                       name="time"
                     />
 
                     <TimeInput
-                      label="Tempo de pausa"
                       defaultValue={new Time(0, 0, 0)}
                       granularity="second"
+                      label="Tempo de pausa"
                       name="pauseTime"
                     />
                   </div>
 
                   <DateInput
-                    label="Data de hoje"
+                  //@ts-ignore
                     defaultValue={parseDate(
                       today(getLocalTimeZone()).toString(),
                     )}
+                    label="Data de hoje"
                     name="date"
                   />
 
                   <Autocomplete
+                    isRequired
                     label="Período de estudo"
                     name="period"
-                    isRequired
                   >
                     <AutocompleteItem value="Manhã">Manhã</AutocompleteItem>
                     <AutocompleteItem value="Tarde">Tarde</AutocompleteItem>
@@ -151,26 +154,26 @@ export default function SaveStudy({
 
                   <div className="grid grid-cols-2 gap-3">
                     <Input
-                      type="number"
-                      label="Quantidade de questões"
-                      name="questions"
-                      min={0}
                       defaultValue="0"
+                      label="Quantidade de questões"
+                      min={0}
+                      name="questions"
+                      type="number"
                     />
 
                     <Input
-                      type="number"
-                      label="Quantidade de acertos"
-                      name="correctQuestions"
-                      min={0}
                       defaultValue="0"
+                      label="Quantidade de acertos"
+                      min={0}
+                      name="correctQuestions"
+                      type="number"
                     />
                   </div>
 
                   <Input
                     label="Qual foi o assunto de hoje?"
-                    placeholder="Direito Penal"
                     name="topic"
+                    placeholder="Direito Penal"
                   />
                 </ModalBody>
                 <ModalFooter>

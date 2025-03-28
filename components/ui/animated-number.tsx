@@ -1,8 +1,9 @@
 "use client";
-import { cn } from "@/lib/utils";
 import { SpringOptions } from "framer-motion";
 import { motion, useSpring, useTransform } from "motion/react";
 import { useEffect } from "react";
+
+import { cn } from "@/lib/utils";
 
 type AnimatedNumber = {
   value: number;

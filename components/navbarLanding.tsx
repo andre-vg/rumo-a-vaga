@@ -12,13 +12,13 @@ import {
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import NextLink from "next/link";
-
-import { ThemeSwitch } from "@/components/theme-switch";
-import { siteConfig } from "@/config/site";
 import { Button } from "@heroui/button";
 import { LibraryBig } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+
+import { siteConfig } from "@/config/site";
+import { ThemeSwitch } from "@/components/theme-switch";
 
 export default function NavbarLanding() {
   const session = useSession();
@@ -28,6 +28,7 @@ export default function NavbarLanding() {
 
   const handleScroll = () => {
     const position = window.scrollY;
+
     setScrollPosition(position);
   };
 
@@ -41,9 +42,6 @@ export default function NavbarLanding() {
 
   return (
     <NextUINavbar
-      maxWidth="xl"
-      position="sticky"
-      isBlurred={scrollPosition < 300}
       classNames={{
         base: [
           `border-primary bg-transparent justify-center items-center backdrop-blur-none`,
@@ -52,8 +50,8 @@ export default function NavbarLanding() {
           "flex justify-between transition-all duration-500 ease-in-out items-center",
           "xl:px-8 xl:py-8 pl-0 bg-background backdrop-blur-sm",
           scrollPosition < 300
-            ? "xl:mt-0 xl:border-0 xl:rounded-none xl:shadow-none"
-            : "xl:mt-10 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-md",
+            ? "xl:mt-0 xl:border-0 xl:rounded-xl xl:shadow-none"
+            : "xl:mt-10 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-sm",
         ],
         item: [
           "flex",
@@ -63,6 +61,9 @@ export default function NavbarLanding() {
           "text-default-500 hover:text-primary",
         ],
       }}
+      isBlurred={scrollPosition < 300}
+      maxWidth="xl"
+      position="sticky"
     >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
@@ -78,10 +79,10 @@ export default function NavbarLanding() {
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  "gap-1"
+                  "gap-1",
                 )}
-                href={item.href}
                 data-active={item.href === path}
+                href={item.href}
                 onClick={() => setPath(item.href)}
               >
                 <item.icon />
@@ -113,8 +114,8 @@ export default function NavbarLanding() {
         </NavbarItem> */}
         <NavbarItem>
           <Button
-            onPress={() => signIn("google", { redirectTo: "/dashboard" })}
             color="primary"
+            onPress={() => signIn("google", { redirectTo: "/dashboard" })}
           >
             Entrar
           </Button>

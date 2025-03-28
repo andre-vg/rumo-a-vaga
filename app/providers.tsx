@@ -1,6 +1,7 @@
 "use client";
 
 import type { ThemeProviderProps } from "next-themes";
+
 import { Toaster } from "sonner";
 import * as React from "react";
 import { HeroUIProvider } from "@heroui/system";
@@ -25,10 +26,10 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <HeroUIProvider navigate={router.push} locale="pt-BR">
+    <HeroUIProvider locale="pt-BR" navigate={router.push}>
       <SessionProvider>
         <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-        <Toaster richColors closeButton />
+        <Toaster closeButton richColors />
       </SessionProvider>
     </HeroUIProvider>
   );

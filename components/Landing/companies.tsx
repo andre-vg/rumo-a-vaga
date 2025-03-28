@@ -12,6 +12,7 @@ export default function Companies() {
     "Agências",
     "Universidades",
   ];
+
   return (
     <div className="relative h-[350px] w-full overflow-hidden">
       <InfiniteSlider
@@ -21,8 +22,8 @@ export default function Companies() {
       >
         {VAGAS.map((vaga, i) => (
           <div
-            className="flex items-center justify-center w-[200px] h-[200px]"
             key={i}
+            className="flex items-center justify-center w-[200px] h-[200px]"
           >
             <span className={body({ className: "font-medium text-2xl" })}>
               {vaga}
@@ -31,14 +32,14 @@ export default function Companies() {
         ))}
       </InfiniteSlider>
       <ProgressiveBlur
+        blurIntensity={1}
         className="pointer-events-none absolute top-0 left-0 h-full w-[200px]"
         direction="left"
-        blurIntensity={1}
       />
       <ProgressiveBlur
+        blurIntensity={1}
         className="pointer-events-none absolute top-0 right-0 h-full w-[200px]"
         direction="right"
-        blurIntensity={1}
       />
     </div>
   );

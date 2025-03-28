@@ -1,10 +1,26 @@
-import React from "react";
-import { Timeline } from "@/components/ui/timeline";
-import { Image } from "@heroui/image";
 import { subtitle } from "../primitives";
+
+import { Timeline } from "@/components/ui/timeline";
 
 export function TimelineSection() {
   const data = [
+    {
+      title: "28/03/2025",
+      content: (
+        <div>
+          <ul className={subtitle({ className: "list-disc space-y-4" })}>
+            <li>
+              Agora temos Landing Page, com informações sobre o projeto e
+              funcionalidades. Feito para atrair novos usuários.
+            </li>
+            <li>
+              Agora temos a cor primaria do projeto, que é o roxo, deixando
+              aquele azul de lado!!
+            </li>
+          </ul>
+        </div>
+      ),
+    },
     {
       title: "17/02/2025",
       content: (
@@ -49,6 +65,7 @@ export function TimelineSection() {
       ),
     },
   ];
+
   return (
     <div className="w-full">
       <Timeline data={data} />
