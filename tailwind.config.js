@@ -6,7 +6,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/(table|checkbox|form|spacer).js",
+    "./node_modules/@nextui-org/theme/dist/components/(table|checkbox|form|spacer|button|input|select|radio|switch|alert|modal|tooltip|popover|tabs|menu|navbar|pagination|progress|slider|spinner|toast|typography|card|avatar|badge|chip|divider|list|tag|breadcrumb|dialog|drawer|stepper|table).js",
   ],
   theme: {
     extend: {

@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
-import { CircularProgress } from "@heroui/progress";
 import { Button } from "@heroui/button";
-import { AnimatePresence, motion as m } from "framer-motion";
-import SaveStudy from "../modals/saveStudy";
 import { useDisclosure } from "@heroui/modal";
+import { CircularProgress } from "@heroui/progress";
 import { Time } from "@internationalized/date";
-import { Settings2 } from "lucide-react";
-import ClockSettingsModal from "../modals/clockSettingsModal";
+import { AnimatePresence, motion as m } from "framer-motion";
+import React from "react";
+import ClockSettingsDrawer from "../modals/clockSettingsModal";
+import SaveStudy from "../modals/saveStudy";
 
 export default function Clock() {
   const [minutes, setMinutes] = React.useState(0);
@@ -69,11 +68,11 @@ export default function Clock() {
 
   return (
     <div className="grid place-items-center mt-8">
-      <div className="flex justify-end w-1/2">
+      {/* <div className="flex justify-end w-1/2">
         <Button isIconOnly variant="light" onPress={clockSettings.onOpen}>
           <Settings2 size={32} />
         </Button>
-      </div>
+      </div> */}
       <CircularProgress
         classNames={{
           svg: "w-96 h-96 drop-shadow-md",
@@ -147,7 +146,7 @@ export default function Clock() {
         onOpenChange={onOpenChange}
         studyTime={new Time(hours, minutes, seconds)}
       />
-      <ClockSettingsModal {...clockSettings} />
+      <ClockSettingsDrawer {...clockSettings} />
     </div>
   );
 }

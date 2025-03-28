@@ -56,4 +56,9 @@
     --chart-4: 280 65% 60%;
     --chart-2: 340 75% 55%;
   }
+
+}
+.radial {
+  /* radial gradient from nextui-primary to nextui-secondary; */
+  background: radial-gradient(circle, hsl(var(--heroui-primary-50)), hsl(var(--heroui-background)));
 }

@@ -46,6 +46,13 @@ export const siteConfig = {
       href: "/novidades",
     },
   ],
+  landingNavItems: [
+    {
+      label: "Página Inicial",
+      href: "/dashboard",
+      icon: HomeIcon,
+    },
+  ],
   links: {
     github: "https://github.com/nextui-org/nextui",
     twitter: "https://twitter.com/getnextui",
