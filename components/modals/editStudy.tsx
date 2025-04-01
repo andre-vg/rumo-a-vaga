@@ -151,7 +151,7 @@ export default function EditStudy({
                     defaultValue={parseDate(
                       study.date ?? today(getLocalTimeZone()).toString()
                     )}
-                    label="Data de hoje"
+                    label="Data do estudo"
                     name="date"
                   />
 
@@ -178,21 +178,19 @@ export default function EditStudy({
 
                   <div className="grid grid-cols-2 gap-3">
                     <Input
-                      defaultValue="0"
                       label="Quantidade de questões"
                       min={0}
                       name="questions"
                       type="number"
-                      value={(study.questions ?? 0).toString()}
+                      defaultValue={(study.questions ?? 0).toString()}
                     />
 
                     <Input
-                      defaultValue="0"
                       label="Quantidade de acertos"
                       min={0}
                       name="correctQuestions"
                       type="number"
-                      value={(study.correctQuestions ?? 0).toString()}
+                      defaultValue={(study.correctQuestions ?? 0).toString()}
                     />
                   </div>
 
