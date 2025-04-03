@@ -1,30 +1,32 @@
+import { cn } from "@/lib/utils";
+import { motion as m, MotionProps } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import React from "react";
-
-import { cn } from "@/lib/utils";
 
 interface InteractiveHoverButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: string;
+  motionProps?: MotionProps;
 }
 
 export const InteractiveHoverButton = React.forwardRef<
   HTMLButtonElement,
   InteractiveHoverButtonProps
->(({ children, className, color, ...props }, ref) => {
+>(({ children, className, color, motionProps, ...props }, ref) => {
   return (
-    <button
-      ref={ref}
+    <m.button
+      ref={ref as any}
       className={cn(
         "group relative w-auto cursor-pointer overflow-hidden rounded-full border bg-background p-2 px-6 text-center font-semibold",
-        className,
+        className
       )}
-      {...props}
+      {...(props as any)}
+      {...motionProps}
     >
       <div className="flex items-center gap-2">
         <div
           className={cn(
-            `h-2 w-2 rounded-full transition-all duration-400 group-hover:scale-[100.8] ${color}`,
+            `h-2 w-2 rounded-full transition-all duration-400 group-hover:scale-[100.8] ${color}`
           )}
         />
         <span className="inline-block transition-all duration-400 group-hover:translate-x-12 group-hover:opacity-0">
@@ -35,7 +37,7 @@ export const InteractiveHoverButton = React.forwardRef<
         <span>{children}</span>
         <ArrowRight />
       </div>
-    </button>
+    </m.button>
   );
 });
 

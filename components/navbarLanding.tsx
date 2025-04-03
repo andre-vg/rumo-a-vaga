@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import {
   NavbarBrand,
@@ -11,14 +12,13 @@ import {
 } from "@heroui/navbar";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
-import NextLink from "next/link";
-import { Button } from "@heroui/button";
 import { LibraryBig } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
+import NextLink from "next/link";
 import { useEffect, useState } from "react";
 
-import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { siteConfig } from "@/config/site";
 
 export default function NavbarLanding() {
   const session = useSession();
@@ -48,10 +48,10 @@ export default function NavbarLanding() {
         ],
         wrapper: [
           "flex justify-between transition-all duration-500 ease-in-out items-center",
-          "xl:px-8 xl:py-8 pl-0 bg-background backdrop-blur-sm",
-          scrollPosition < 300
-            ? "xl:mt-0 xl:border-0 xl:rounded-xl xl:shadow-none"
-            : "xl:mt-10 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-sm",
+          "xl:px-8 xl:py-8 pl-0 backdrop-blur-sm",
+          scrollPosition < 50
+            ? "xl:mt-0 xl:rounded-none xl:shadow-none border-x-2 border-default-300 bg-transparent"
+            : "xl:mt-6 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-sm",
         ],
         item: [
           "flex",
@@ -61,7 +61,7 @@ export default function NavbarLanding() {
           "text-default-500 hover:text-primary",
         ],
       }}
-      isBlurred={scrollPosition < 300}
+      isBlurred={scrollPosition < 50}
       maxWidth="xl"
       position="sticky"
     >

@@ -1,5 +1,4 @@
 import { Button } from "@heroui/button";
-import { Image } from "@heroui/image";
 import { signIn } from "next-auth/react";
 import { Area, AreaChart, CartesianGrid } from "recharts";
 
@@ -8,13 +7,9 @@ import { body, title } from "../primitives";
 import { ChartConfig, ChartContainer } from "../ui/chart";
 
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Bento() {
-  // {
-  //   {
-  //     "title": "Revise com mais eficiência!",
-  //     "description": "Grave seus estudos e revise quando quiser. Uma maneira prática de consolidar o aprendizado."
-  //   }}
   return (
     <div className="py-12">
       <div className="grid grid-cols-6 gap-4 w-full">
@@ -32,11 +27,10 @@ export default function Bento() {
             {Array.from({ length: 3 }, (_, idx) => (
               <Image
                 key={idx}
-                removeWrapper
+                width={200}
+                height={200}
                 alt="hero"
-                classNames={{
-                  img: cn("h-full object-cover object-center rounded-none"),
-                }}
+                className="h-full object-cover object-center rounded-none"
                 src={`/sheets${idx + 1}.svg`}
               />
             ))}
@@ -202,7 +196,7 @@ export function BentoTable() {
   return (
     <div
       className={cn(
-        "relative flex h- w-full h-32 flex-col overflow-hidden p-2",
+        "relative flex h- w-full h-32 flex-col overflow-hidden p-2"
       )}
     >
       <AnimatedList>
@@ -233,7 +227,7 @@ const Notification = ({ name, description, icon, color, time }: Item) => {
         // light styles
         "bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
         // dark styles
-        "transform-gpu dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
+        "transform-gpu dark:bg-transparent dark:backdrop-blur-md dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
       )}
     >
       <div className="flex flex-row items-center gap-3">

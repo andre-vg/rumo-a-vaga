@@ -10,14 +10,12 @@ export default function Home() {
   return (
     <>
       <NavbarLanding />
-      <main className="container mx-auto max-w-7xl px-6 flex-grow border-x-2">
-        <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-          <Hero />
-          <Bento />
-          <Video />
-          <Companies />
-        </section>
-      </main>
+      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10 px-6 border-x-2 border-default-300 container mx-auto max-w-7xl flex-grow">
+        <Hero />
+        <Bento />
+        <Video />
+        <Companies />
+      </section>
       <Footer />
     </>
   );
