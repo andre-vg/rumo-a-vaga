@@ -5,13 +5,11 @@ import Google from "next-auth/providers/google";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
   },
   providers: [
     Google({
-      clientId: process.env.NEXT_PUBLIC_AUTH_GOOGLE_ID,
-      clientSecret: process.env.NEXT_PUBLIC_AUTH_GOOGLE_SECRET,
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
       allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
@@ -31,9 +29,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      user: { ...session.user, id: token.sub },
-    }),
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+        token.id = profile?.id
+      }
+      return token
+    }
   },
 });
