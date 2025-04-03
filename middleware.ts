@@ -1,13 +1,21 @@
-import { auth } from "@/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-export default auth((req) => {
-  if (!req.auth && req.nextUrl.pathname !== "/") {
-    const newUrl = new URL("/", req.nextUrl.origin);
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const { pathname } = req.nextUrl;
 
-    return Response.redirect(newUrl);
+  if (pathname === "/") {
+    return NextResponse.next();
   }
-});
+
+  if (!token) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/((?!api|...|_next/static|_next/image|favicon.ico|public).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.svg$).*)"],
 };
