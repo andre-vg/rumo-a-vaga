@@ -75,6 +75,9 @@ export default function TableEstudos() {
                 //@ts-ignore
                 src: stud.Subject.image,
                 size: "lg",
+                classNames:{
+                  base: "aspect-square",
+                }
               }}
               description={
                 <>

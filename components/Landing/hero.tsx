@@ -63,7 +63,7 @@ export default function Hero() {
         </div>
         <m.h2
           className={subtitle({
-            className: "!w-1/2 text-center",
+            className: "lg:!w-1/2 text-center",
           })}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

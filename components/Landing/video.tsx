@@ -4,7 +4,7 @@ import { body, title } from "../primitives";
 
 export default function Video() {
   return (
-    <div className="grid grid-cols-2 gap-8 py-12">
+    <div className="grid lg:grid-cols-2 gap-8 py-12">
       <div className="flex flex-col justify-center gap-4">
         <h1 className={title({ size: "xl" })}>Como funciona?</h1>
         <p className={body()}>
@@ -21,7 +21,7 @@ export default function Video() {
           "https://enkkszonozxfabvotzyw.supabase.co/storage/v1/object/public/videos/rumoAvaga.mp4"
         }
       /> */}
-      <div className="h-full min-h-96 w-full rounded-3xl shadow-lg">
+      <div className="h-full lg:min-h-96 w-full rounded-3xl shadow-lg">
         <video
           autoPlay
           loop

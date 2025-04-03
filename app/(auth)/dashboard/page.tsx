@@ -56,7 +56,7 @@ export default function PageDash() {
       >
         Adicionar matéria
       </Button>
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid lg:grid-cols-2 gap-4 mt-4">
         {subs && <SubjectCards subjects={subs} />}
       </div>
       <AddSubjectModal

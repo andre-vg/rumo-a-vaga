@@ -19,10 +19,14 @@ import { useEffect, useState } from "react";
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
+import useMobileDetect from "@/hooks/mobileHook";
+import { cn } from "@/lib/utils";
 
 export default function NavbarLanding() {
   const session = useSession();
   const [path, setPath] = useState("/");
+
+  const isMobile = useMobileDetect().isMobile();
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -46,13 +50,14 @@ export default function NavbarLanding() {
         base: [
           `border-primary bg-transparent justify-center items-center backdrop-blur-none`,
         ],
-        wrapper: [
+        brand: "px-4",
+        wrapper: cn(
           "flex justify-between transition-all duration-500 ease-in-out items-center",
           "xl:px-8 xl:py-8 pl-0 backdrop-blur-sm",
           scrollPosition < 50
             ? "xl:mt-0 xl:rounded-none xl:shadow-none border-x-2 border-default-300 bg-transparent"
-            : "xl:mt-6 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-sm",
-        ],
+            : "xl:mt-6 xl:border-1 xl:border-default xl:rounded-full xl:shadow-md bg-background/60 backdrop-blur-lg lg:backdrop-blur-sm",
+        ),
         item: [
           "flex",
           "relative",
@@ -79,7 +84,7 @@ export default function NavbarLanding() {
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  "gap-1",
+                  "gap-1"
                 )}
                 data-active={item.href === path}
                 href={item.href}
@@ -124,7 +129,15 @@ export default function NavbarLanding() {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
-        <NavbarMenuToggle />
+        {/* <NavbarMenuToggle /> */}
+        <NavbarItem>
+          <Button
+            color="primary"
+            onPress={() => signIn("google", { redirectTo: "/dashboard" })}
+          >
+            Entrar
+          </Button>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarMenu>

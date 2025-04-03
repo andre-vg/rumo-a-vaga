@@ -3,6 +3,7 @@ import { Avatar } from "@heroui/avatar";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import {
+  NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
@@ -19,6 +20,8 @@ import { useState } from "react";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { Logo } from "./icons";
+import { LibraryBig } from "lucide-react";
 
 export default function Navbar() {
   const session = useSession();
@@ -33,7 +36,7 @@ export default function Navbar() {
         wrapper: [
           "flex justify-between transition-all duration-500 ease-in-out items-center",
           "xl:px-8 xl:py-8 pl-0 bg-background backdrop-blur-sm",
-          "xl:mt-0 xl:border-0 xl:rounded-xl xl:shadow-none",
+          "xl:mt-0 xl:border-0 xl:rounded-xl xl:shadow-none px-4",
         ],
         item: [
           "flex",
@@ -47,12 +50,12 @@ export default function Navbar() {
       position="sticky"
     >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        {/* <NavbarBrand as="li" className="gap-3 max-w-fit">
+        <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <LibraryBig />
+            <p className="font-bold text-inherit">Rumo a Vaga</p>
           </NextLink>
-        </NavbarBrand> */}
+        </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
@@ -60,7 +63,7 @@ export default function Navbar() {
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
-                  "gap-1",
+                  "gap-1"
                 )}
                 data-active={item.href === path}
                 href={item.href}
@@ -156,7 +159,7 @@ export default function Navbar() {
                       ? "danger"
                       : "foreground"
                 }
-                href="#"
+                href={item.href}
                 size="lg"
               >
                 {item.label}

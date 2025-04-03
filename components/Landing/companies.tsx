@@ -33,12 +33,12 @@ export default function Companies() {
       </InfiniteSlider>
       <ProgressiveBlur
         blurIntensity={1}
-        className="pointer-events-none absolute top-0 left-0 h-full w-[200px]"
+        className="pointer-events-none absolute top-0 left-0 h-full lg:w-[200px]"
         direction="left"
       />
       <ProgressiveBlur
         blurIntensity={1}
-        className="pointer-events-none absolute top-0 right-0 h-full w-[200px]"
+        className="pointer-events-none absolute top-0 right-0 h-full lg:w-[200px]"
         direction="right"
       />
     </div>

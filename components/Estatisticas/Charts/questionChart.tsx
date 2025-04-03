@@ -77,7 +77,7 @@ export function QuestionChart({
         <h1 className={title({ size: "xs", className: "tracking-normal" })}>
           Questões Respondidas x Acertos
         </h1>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="min-h-[150px]">
           <BarChart accessibilityLayer data={chartDatas}>
             <XAxis
               axisLine={false}

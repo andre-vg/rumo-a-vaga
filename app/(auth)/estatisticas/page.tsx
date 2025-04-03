@@ -1,8 +1,10 @@
 "use client";
 
 import { QuestionChart } from "@/components/Estatisticas/Charts/questionChart";
+import { SubjectChart } from "@/components/Estatisticas/Charts/subjectChart";
 import { title } from "@/components/primitives";
 import { Database } from "@/database.types";
+import useMobileDetect from "@/hooks/mobileHook";
 import { formatSecondsToHHMMSS } from "@/utils/secondsToDateString";
 import { supabase } from "@/utils/supabase/client";
 import { Card, CardBody, CardHeader } from "@heroui/card";
@@ -24,12 +26,16 @@ import React from "react";
 export default function PageStats() {
   const [stats, setStats] =
     React.useState<Database["public"]["Tables"]["Study"]["Row"][]>();
-  const [value, setValue] = React.useState<RangeValue<DateValue> | null | undefined>({
+  const [value, setValue] = React.useState<
+    RangeValue<DateValue> | null | undefined
+  >({
     start: parseDate(startOfMonth(today(getLocalTimeZone())).toString()),
     end: parseDate(today(getLocalTimeZone()).toString()),
   });
 
   const { data } = useSession();
+
+  const isMobile = useMobileDetect().isMobile();
 
   let formatter = useDateFormatter({ dateStyle: "short" });
   const statsQuery = supabase()
@@ -42,7 +48,7 @@ export default function PageStats() {
         .format(value!.start?.toDate(getLocalTimeZone()))
         .split("/")
         .reverse()
-        .join("-"),
+        .join("-")
     )
     .lte(
       "date",
@@ -50,7 +56,7 @@ export default function PageStats() {
         .format(value!.end?.toDate(getLocalTimeZone()))
         .split("/")
         .reverse()
-        .join("-"),
+        .join("-")
     );
 
   const getStats = async () => {
@@ -78,23 +84,23 @@ export default function PageStats() {
           Acompanhe o seu progresso e veja como você está se saindo nos seus
         </h3>
 
-        <div className="grid grid-cols-2 w-full">
+        <div className="grid lg:grid-cols-2 w-full">
           <DateRangePicker
-          classNames={{
-            inputWrapper:"bg-background"
-          }}
+            classNames={{
+              inputWrapper: "bg-background",
+            }}
             label="Selecione o período"
             pageBehavior="single"
             //@ts-ignore
             value={value}
             onChange={setValue}
-            visibleMonths={2}
+            visibleMonths={isMobile ? 1 : 2}
           />
         </div>
-{/** @ts-ignore */}
+        {/** @ts-ignore */}
         <StatCards stats={stats} value={value} />
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-8">
         <QuestionChart chartData={stats} />
         {/* <SubjectChart chartData={stats} /> */}
       </div>
@@ -126,7 +132,7 @@ function StatCards({
       totalTime /
       (moment(value!.end!.toDate(getLocalTimeZone())).diff(
         moment(value!.start!.toDate(getLocalTimeZone())),
-        "days",
+        "days"
       ) +
         1)
     );
@@ -147,7 +153,7 @@ function StatCards({
   }, [stats]);
 
   return (
-    <div className="grid-cols-3 grid gap-8 mt-8">
+    <div className="lg:grid-cols-3 grid gap-2 lg:gap-8 mt-8">
       <Skeleton isLoaded={!!stats}>
         <Card>
           <CardHeader>
@@ -183,9 +189,9 @@ function StatCards({
                 totalQuestions /
                   (moment(value!.end!.toDate(getLocalTimeZone())).diff(
                     moment(value!.start!.toDate(getLocalTimeZone())),
-                    "days",
+                    "days"
                   ) +
-                    1),
+                    1)
               )}{" "}
               por dia!!
             </p>
