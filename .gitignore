@@ -43,4 +43,5 @@ videos/*
 !videos/*.json
 !videos/*.js
 !videos/*.ts
+!videos/*.tsx
 public/_next-video
