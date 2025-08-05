@@ -10,4 +10,5 @@ export default {
   },
   schemaFilter: ["rumo_a_vaga"],
   tablesFilter: ["*"],
+  
 } satisfies Config
