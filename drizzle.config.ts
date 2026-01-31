@@ -1,6 +1,6 @@
-import type { Config } from "drizzle-kit"
+import { type Config } from "drizzle-kit";
 
-import { env } from "@/src/env"
+import { env } from "@/env";
 
 export default {
   schema: "./src/server/db/schema.ts",
@@ -8,7 +8,5 @@ export default {
   dbCredentials: {
     url: env.DATABASE_URL,
   },
-  schemaFilter: ["rumo_a_vaga"],
-  tablesFilter: ["*"],
-  
-} satisfies Config
+  tablesFilter: ["rumo-a-vaga_*"],
+} satisfies Config;
