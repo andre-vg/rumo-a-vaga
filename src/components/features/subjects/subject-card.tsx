@@ -1,7 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { api } from "@/trpc/react";
 import { BookOpen, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -17,12 +23,11 @@ interface SubjectCardProps {
 }
 
 export function SubjectCard({ subject }: SubjectCardProps) {
+  const utils = api.useUtils();
 
-    const utils = api.useUtils();
-  
   const deleteMutation = api.subject.delete.useMutation({
-    onSuccess: () => {
-      utils.subject.getAll.invalidate()
+    onSuccess: async() => {
+      await utils.subject.getAll.invalidate();
     },
   });
 
@@ -62,9 +67,7 @@ export function SubjectCard({ subject }: SubjectCardProps) {
       </CardContent>
       <CardFooter>
         <Link className="w-full" href={`/estudo?subject=${subject.id}`}>
-        <Button className="w-full">
-          Começar estudo
-        </Button>
+          <Button className="w-full">Começar estudo</Button>
         </Link>
       </CardFooter>
     </Card>

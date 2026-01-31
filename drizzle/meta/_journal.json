@@ -8,6 +8,13 @@
       "when": 1769820194365,
       "tag": "0000_premium_winter_soldier",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1769878708261,
+      "tag": "0001_damp_jack_power",
+      "breakpoints": true
     }
   ]
 }

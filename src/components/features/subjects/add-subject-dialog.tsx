@@ -24,8 +24,8 @@ export function AddSubjectDialog({ children }: AddSubjectDialogProps) {
   const utils = api.useUtils();
 
   const createMutation = api.subject.create.useMutation({
-    onSuccess: () => {
-      utils.subject.getAll.invalidate();
+    onSuccess: async() => {
+      await utils.subject.getAll.invalidate();
     },
   });
 
