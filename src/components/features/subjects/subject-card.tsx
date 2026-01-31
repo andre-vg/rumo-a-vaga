@@ -19,7 +19,7 @@ interface Subject {
 }
 
 interface SubjectCardProps {
-  subject: Subject;
+  subject: Subject; 
 }
 
 export function SubjectCard({ subject }: SubjectCardProps) {
@@ -30,7 +30,7 @@ export function SubjectCard({ subject }: SubjectCardProps) {
       await utils.subject.getAll.invalidate();
     },
   });
-
+  
   const handleDelete = (id: number) => {
     if (confirm("Tem certeza que deseja remover esta matéria?")) {
       deleteMutation.mutate({ id });

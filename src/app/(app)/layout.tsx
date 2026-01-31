@@ -64,7 +64,7 @@ export default async function AppLayout({
 
           {/* Logo */}
           <Link href="/dashboard" className="mr-8 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-purple-500">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-violet-600 to-purple-500">
               <BookOpen className="h-5 w-5 text-white" />
             </div>
             <span className="hidden bg-gradient-to-r from-violet-700 to-purple-600 bg-clip-text text-lg font-bold text-transparent sm:block">
