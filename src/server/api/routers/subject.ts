@@ -5,24 +5,31 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { subject, taUserSubject } from "@/server/db/schema";
 
 export const subjectRouter = createTRPCRouter({
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    const userSubjects = await ctx.db
-      .select({
-        id: subject.id,
-        name: subject.name,
-        createdAt: subject.createdAt,
-      })
-      .from(subject)
-      .innerJoin(
-        taUserSubject,
-        and(
-          eq(taUserSubject.subjectId, subject.id),
-          eq(taUserSubject.userId, ctx.session.user.id),
-        ),
-      );
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        id: z.number().optional(),
+        name: z.string().optional()
+      }).optional(),
+    )
+    .query(async ({ ctx, input }) => {
+      const userSubjects = await ctx.db
+        .select({
+          id: subject.id,
+          name: subject.name,
+          createdAt: subject.createdAt,
+        })
+        .from(subject)
+        .innerJoin(
+          taUserSubject,
+          and(
+            eq(taUserSubject.subjectId, subject.id),
+            eq(taUserSubject.userId, ctx.session.user.id),
+          ),
+        );
 
-    return userSubjects;
-  }),
+      return userSubjects;
+    }),
 
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1).max(100) }))
