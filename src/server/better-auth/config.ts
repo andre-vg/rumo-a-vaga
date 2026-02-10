@@ -4,6 +4,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/server/db";
 
 export const auth = betterAuth({
+  baseURL:"https://rumoavaga.andrevg.com",
   database: drizzleAdapter(db, {
     provider: "pg",
   }),
