@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/trpc/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,12 +40,15 @@ export function StudyTimerClient({
   studyPeriods,
 }: StudyTimerClientProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isRunning, setIsRunning] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [pauseSeconds, setPauseSeconds] = useState(0);
 
-  const [subjectId, setSubjectId] = useState<string>("");
+  const [subjectId, setSubjectId] = useState<string>(
+    searchParams.get("subject") || "",
+  );
   const [period, setPeriod] = useState<string>("");
   const [method, setMethod] = useState<string>("");
   const [topic, setTopic] = useState<string>("");

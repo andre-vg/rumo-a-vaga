@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/server/better-auth/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,7 @@ import { BookOpen, Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,8 +40,10 @@ export default function LoginPage() {
 
       if (result.error) {
         setError(result.error.message ?? "Erro ao fazer login");
+      } else {
+        router.push("/dashboard");
       }
-    } catch (err) {
+    } catch {
       setError("Erro ao fazer login. Tente novamente.");
     } finally {
       setIsLoading(false);
@@ -67,8 +71,10 @@ export default function LoginPage() {
 
       if (result.error) {
         setError(result.error.message ?? "Erro ao criar conta");
+      } else {
+        router.push("/dashboard");
       }
-    } catch (err) {
+    } catch {
       setError("Erro ao criar conta. Tente novamente.");
     } finally {
       setIsLoading(false);
